@@ -219,7 +219,34 @@ $modversion['config'][18]['valuetype'] = 'int';
 $modversion['config'][18]['default'] = 1;
 
 // Menu contents
+$i=0;
 $modversion['hasMain'] = 1;
+$modversion['sub'][$i]['name'] = '"View/Search';
+$modversion['sub'][$i]['url'] = "index.php";
+$i++;
+$modversion['sub'][$i]['name'] = 'Add a dog';
+$modversion['sub'][$i]['url'] = "add_dog.php";
+$i++;
+$modversion['sub'][$i]['name'] = 'Add a litter';
+$modversion['sub'][$i]['url'] = "add_litter.php";
+$i++;
+$modversion['sub'][$i]['name'] = 'View owners/breeders';
+$modversion['sub'][$i]['url'] = "breeder.php";
+$i++;
+$modversion['sub'][$i]['name'] = 'Add an owner/breeder';
+$modversion['sub'][$i]['url'] = "add_breeder.php";
+$i++;
+$modversion['sub'][$i]['name'] = 'Advanced info';
+$modversion['sub'][$i]['url'] = "advanced.php";
+$i++;
+$modversion['sub'][$i]['name'] = 'Virtual Mating';
+$modversion['sub'][$i]['url'] = "virtual.php";
+$i++;
+$modversion['sub'][$i]['name'] = 'latest additions';
+$modversion['sub'][$i]['url'] = "latest.php";
+$i++;
+$modversion['sub'][$i]['name'] = 'Webmaster tools';
+$modversion['sub'][$i]['url'] = "tools.php?op=index";
 
 
 // Templates

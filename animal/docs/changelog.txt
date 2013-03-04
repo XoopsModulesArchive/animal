@@ -6,7 +6,10 @@
 - Added classes for tables
 - renamed tables to follow XOOPS new standard "mod_module_table"
 - updated for PHP 5.4
+- added menu items to main menu
+- fixed two wrong handlers (flipse/mamba)
 
 ---------------------------------------
-1.29 Final  ????
+1.29 Final  ??????
 ---------------------------------------
+released by James Cotton

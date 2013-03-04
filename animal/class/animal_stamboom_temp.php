@@ -68,7 +68,8 @@ class animal_stamboom_temp extends XoopsObject
 		$form->addElement(new XoopsFormText(_AM_ANIMAL_STAMBOOM_TEMP_FOTO, "foto", 50, 255, $this->getVar("foto")), false);
 		
 			include_once(XOOPS_ROOT_PATH."/class/tree.php");			
-			$Handler =& xoops_getModuleHandler("animal_", "animal");
+//			$Handler =& xoops_getModuleHandler("animal_", "animal");
+            $Handler =& xoops_getModuleHandler('animal_stamboom_temp', "animal");
 			$criteria = new CriteriaCompo();
             $criteria->setSort('_id');
             $criteria->setOrder('ASC');
