@@ -128,11 +128,11 @@ function pups($oid, $gender)
 	$content = "";
 	if ($gender == 0)
 	{
-		$sqlquery = "SELECT d.id as d_id, d.naam as d_naam, d.roft as d_roft, d.* FROM ".$xoopsDB->prefix("stamboom")." d LEFT JOIN ".$xoopsDB->prefix("stamboom")." f ON d.vader = f.id LEFT JOIN ".$xoopsDB->prefix("stamboom")." m ON d.moeder = m.id where d.vader=".$oid." order by d.naam";	
+		$sqlquery = "SELECT d.id as d_id, d.naam as d_naam, d.roft as d_roft, d.* FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." f ON d.vader = f.id LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." m ON d.moeder = m.id where d.vader=".$oid." order by d.naam";
 	}
 	else
 	{ 
-		$sqlquery = "SELECT d.id as d_id, d.naam as d_naam, d.roft as d_roft, d.* FROM ".$xoopsDB->prefix("stamboom")." d LEFT JOIN ".$xoopsDB->prefix("stamboom")." f ON d.vader = f.id LEFT JOIN ".$xoopsDB->prefix("stamboom")." m ON d.moeder = m.id where d.moeder=".$oid." order by d.naam";
+		$sqlquery = "SELECT d.id as d_id, d.naam as d_naam, d.roft as d_roft, d.* FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." f ON d.vader = f.id LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." m ON d.moeder = m.id where d.moeder=".$oid." order by d.naam";
 	}
 	$queryresult = $xoopsDB->query($sqlquery);
 	$nummatch = $xoopsDB->getRowsNum($queryresult);
@@ -207,11 +207,11 @@ function bas($oid, $pa ,$ma)
 	global $xoopsDB, $numofcolumns1, $nummatch1, $pages1, $columns1, $dogs1;
 	if ($pa == "0" && $ma == "0")
 	{
-		$sqlquery = "SELECT * FROM ".$xoopsDB->prefix("stamboom")." where vader = ".$pa." and moeder = ".$ma." and ID != ".$oid." and vader != '0' and moeder !='0' order by NAAM";
+		$sqlquery = "SELECT * FROM ".$xoopsDB->prefix("mod_pedigree_tree")." where vader = ".$pa." and moeder = ".$ma." and ID != ".$oid." and vader != '0' and moeder !='0' order by NAAM";
 	}
 	else
 	{
-	$sqlquery = "SELECT * FROM ".$xoopsDB->prefix("stamboom")." where vader = ".$pa." and moeder = ".$ma." and ID != ".$oid." order by NAAM";
+	$sqlquery = "SELECT * FROM ".$xoopsDB->prefix("mod_pedigree_tree")." where vader = ".$pa." and moeder = ".$ma." and ID != ".$oid." order by NAAM";
 	}
 	$queryresult = $xoopsDB->query($sqlquery);
 	$nummatch1 = $xoopsDB->getRowsNum($queryresult);
@@ -288,11 +288,11 @@ function breederof($oid, $breeder)
 	
 	if ($breeder == 0)
 	{
-		$sqlquery = "SELECT ID, NAAM, roft from ".$xoopsDB->prefix("stamboom")." WHERE id_eigenaar = '".$oid."' order by NAAM"; 	
+		$sqlquery = "SELECT ID, NAAM, roft from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE id_eigenaar = '".$oid."' order by NAAM";
 	}
 	else
 	{ 
-		$sqlquery = "SELECT ID, NAAM, roft from ".$xoopsDB->prefix("stamboom")." WHERE id_fokker = '".$oid."' order by NAAM";
+		$sqlquery = "SELECT ID, NAAM, roft from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE id_fokker = '".$oid."' order by NAAM";
 	}
 	$queryresult = $xoopsDB->query($sqlquery);
 	while ($rowres = $xoopsDB->fetchArray($queryresult))
@@ -311,7 +311,7 @@ function breederof($oid, $breeder)
 function getname($oid)
 {
 	global $xoopsDB;
-	$sqlquery = "SELECT NAAM from ".$xoopsDB->prefix("stamboom")." WHERE ID = '".$oid."'"; 	
+	$sqlquery = "SELECT NAAM from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID = '".$oid."'";
 	$queryresult = $xoopsDB->query($sqlquery);
 	while ($rowres = $xoopsDB->fetchArray($queryresult))
 	{
@@ -323,7 +323,7 @@ function getname($oid)
 function showparent($PA)
 {
 	global $xoopsDB;
-	$sqlquery = "SELECT NAAM from ".$xoopsDB->prefix("stamboom")." where ID='".$PA."'";
+	$sqlquery = "SELECT NAAM from ".$xoopsDB->prefix("mod_pedigree_tree")." where ID='".$PA."'";
 	$queryresult = $xoopsDB->query($sqlquery);
 	while ($rowres = $xoopsDB->fetchArray($queryresult))
 	{
@@ -336,7 +336,7 @@ function showparent($PA)
 function findid($naam_hond)
 {
 	global $xoopsDB;
-	$sqlquery = "SELECT ID from ".$xoopsDB->prefix("stamboom")." where NAAM= '$naam_hond'";
+	$sqlquery = "SELECT ID from ".$xoopsDB->prefix("mod_pedigree_tree")." where NAAM= '$naam_hond'";
 	$queryresult = $xoopsDB->query($sqlquery);
 	while ($rowres = $xoopsDB->fetchArray($queryresult))
 	{
@@ -441,4 +441,70 @@ function makelist($result, $prefix, $link, $element)
 
 }
 
-?>
+/***************Blocks***************/
+function animal_block_addCatSelect($cats) {
+	if(is_array($cats))
+	{
+		$cat_sql = "(".current($cats);
+		array_shift($cats);
+		foreach($cats as $cat)
+		{
+			$cat_sql .= ",".$cat;
+		}
+		$cat_sql .= ")";
+	}
+	return $cat_sql;
+}
+
+function animal_CleanVars( &$global, $key, $default = '', $type = 'int' ) {
+    switch ( $type ) {
+        case 'string':
+            $ret = ( isset( $global[$key] ) ) ? filter_var( $global[$key], FILTER_SANITIZE_MAGIC_QUOTES ) : $default;
+            break;
+        case 'int': default:
+            $ret = ( isset( $global[$key] ) ) ? filter_var( $global[$key], FILTER_SANITIZE_NUMBER_INT ) : $default;
+            break;
+    }
+    if ( $ret === false ) {
+        return $default;
+    }
+    return $ret;
+}
+
+function animal_meta_keywords($content)
+{
+	global $xoopsTpl, $xoTheme;
+	$myts =& MyTextSanitizer::getInstance();
+	$content= $myts->undoHtmlSpecialChars($myts->sanitizeForDisplay($content));
+	if(isset($xoTheme) && is_object($xoTheme)) {
+		$xoTheme->addMeta( 'meta', 'keywords', strip_tags($content));
+	} else {	// Compatibility for old Xoops versions
+		$xoopsTpl->assign('xoops_meta_keywords', strip_tags($content));
+	}
+}
+
+function animal_meta_description($content)
+{
+	global $xoopsTpl, $xoTheme;
+	$myts =& MyTextSanitizer::getInstance();
+	$content= $myts->undoHtmlSpecialChars($myts->displayTarea($content));
+	if(isset($xoTheme) && is_object($xoTheme)) {
+		$xoTheme->addMeta( 'meta', 'description', strip_tags($content));
+	} else {	// Compatibility for old Xoops versions
+		$xoopsTpl->assign('xoops_meta_description', strip_tags($content));
+	}
+}
+
+/**
+ * Verify that a mysql table exists
+ *
+ * @package News
+ * @author Hervé Thouzard (http://www.herve-thouzard.com)
+ * @copyright (c) Hervé Thouzard
+*/
+function tableExists($tablename)
+{
+	global $xoopsDB;
+	$result=$xoopsDB->queryF("SHOW TABLES LIKE '$tablename'");
+	return($xoopsDB->getRowsNum($result) > 0);
+}

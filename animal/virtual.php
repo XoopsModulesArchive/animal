@@ -40,7 +40,7 @@ function virt()
 	//create list of males dog to select from
 	$perp = $moduleConfig['perpage'];
 	//count total number of dogs
-	$numdog = "SELECT count(d.id) FROM ".$xoopsDB->prefix("stamboom")." d LEFT JOIN ".$xoopsDB->prefix("stamboom")." m ON m.id = d.moeder LEFT JOIN ".$xoopsDB->prefix("stamboom")." f ON f.id = d.vader WHERE d.roft = '0' and d.moeder != '0' and d.vader != '0' and m.moeder != '0' and m.vader != '0' and f.moeder != '0' and f.vader != '0' and d.naam LIKE '".$l."%'";
+	$numdog = "SELECT count(d.id) FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." m ON m.id = d.moeder LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." f ON f.id = d.vader WHERE d.roft = '0' and d.moeder != '0' and d.vader != '0' and m.moeder != '0' and m.vader != '0' and f.moeder != '0' and f.vader != '0' and d.naam LIKE '".$l."%'";
 	$numres = $xoopsDB->query($numdog);
 	//total number of dogs the query will find
 	list($numresults) = $xoopsDB->fetchRow($numres);
@@ -96,7 +96,7 @@ function virt()
 	}
 	
 	//query
-	$queryString = "SELECT d.*, d.id AS d_id, d.naam AS d_naam FROM ".$xoopsDB->prefix("stamboom")." d LEFT JOIN ".$xoopsDB->prefix("stamboom")." m ON m.id = d.moeder LEFT JOIN ".$xoopsDB->prefix("stamboom")." f ON f.id = d.vader WHERE d.roft = '0' and d.moeder != '0' and d.vader != '0' and m.moeder != '0' and m.vader != '0' and f.moeder != '0' and f.vader != '0' and d.naam LIKE '".$l."%' ORDER BY d.naam LIMIT ".$st.", ".$perp;
+	$queryString = "SELECT d.*, d.id AS d_id, d.naam AS d_naam FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." m ON m.id = d.moeder LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." f ON f.id = d.vader WHERE d.roft = '0' and d.moeder != '0' and d.vader != '0' and m.moeder != '0' and m.vader != '0' and f.moeder != '0' and f.vader != '0' and d.naam LIKE '".$l."%' ORDER BY d.naam LIMIT ".$st.", ".$perp;
 	$result = $xoopsDB->query($queryString);
 	
 	$animal = new Animal( );
@@ -199,7 +199,7 @@ function dam()
 	//create list of males dog to select from
 	$perp = $moduleConfig['perpage'];
 	//count total number of dogs
-	$numdog = "SELECT count(d.id) FROM ".$xoopsDB->prefix("stamboom")." d LEFT JOIN ".$xoopsDB->prefix("stamboom")." m ON m.id = d.moeder LEFT JOIN ".$xoopsDB->prefix("stamboom")." f ON f.id = d.vader WHERE d.roft = '1' and d.moeder != '0' and d.vader != '0' and m.moeder != '0' and m.vader != '0' and f.moeder != '0' and f.vader != '0' and d.naam LIKE '".$l."%'";
+	$numdog = "SELECT count(d.id) FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." m ON m.id = d.moeder LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." f ON f.id = d.vader WHERE d.roft = '1' and d.moeder != '0' and d.vader != '0' and m.moeder != '0' and m.vader != '0' and f.moeder != '0' and f.vader != '0' and d.naam LIKE '".$l."%'";
 	$numres = $xoopsDB->query($numdog);
 	//total number of dogs the query will find
 	list($numresults) = $xoopsDB->fetchRow($numres);
@@ -270,7 +270,7 @@ function dam()
 	}
 	
 	//query
-	$queryString = "SELECT d.*, d.id AS d_id, d.naam AS d_naam FROM ".$xoopsDB->prefix("stamboom")." d LEFT JOIN ".$xoopsDB->prefix("stamboom")." m ON m.id = d.moeder LEFT JOIN ".$xoopsDB->prefix("stamboom")." f ON f.id = d.vader WHERE d.roft = '1' and d.moeder != '0' and d.vader != '0' and m.moeder != '0' and m.vader != '0' and f.moeder != '0' and f.vader != '0' and d.naam LIKE '".$l."%' ORDER BY d.naam LIMIT ".$st.", ".$perp;
+	$queryString = "SELECT d.*, d.id AS d_id, d.naam AS d_naam FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." m ON m.id = d.moeder LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." f ON f.id = d.vader WHERE d.roft = '1' and d.moeder != '0' and d.vader != '0' and m.moeder != '0' and m.vader != '0' and f.moeder != '0' and f.vader != '0' and d.naam LIKE '".$l."%' ORDER BY d.naam LIMIT ".$st.", ".$perp;
 	$result = $xoopsDB->query($queryString);
 	
 	$animal = new Animal( );
@@ -352,7 +352,7 @@ function dam()
 	$xoopsTpl->assign("nextaction", "<b>".strtr(_PED_VIRT_DAM, array( '[mother]' => $moduleConfig['mother']))."</b>" );
 	
 	//find father
-	$query = "SELECT ID, NAAM FROM ".$xoopsDB->prefix("stamboom")." WHERE ID=".$selsire;
+	$query = "SELECT ID, NAAM FROM ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID=".$selsire;
 	$result = $xoopsDB->query($query);
 	while ($row = $xoopsDB->fetchArray($result)) 
 	{
@@ -378,7 +378,7 @@ function check()
 	$xoopsTpl->assign("virtualtitle", _PED_VIRUTALTIT );
 	$xoopsTpl->assign("virtualstory", strtr(_PED_VIRUTALSTO, array( '[mother]' => $moduleConfig['mother'], '[father]' => $moduleConfig['father'], '[children]' => $moduleConfig['children'])));
 	//find father
-	$query = "SELECT ID, NAAM FROM ".$xoopsDB->prefix("stamboom")." WHERE ID=".$selsire;
+	$query = "SELECT ID, NAAM FROM ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID=".$selsire;
 	$result = $xoopsDB->query($query);
 	while ($row = $xoopsDB->fetchArray($result)) 
 	{
@@ -387,7 +387,7 @@ function check()
 	$xoopsTpl->assign("virtualsiretitle", strtr(_PED_VIRTUALSTIT, array( '[father]' => $moduleConfig['father'])));
 	$xoopsTpl->assign("virtualsire", $vsire );
 	//find mother
-	$query = "SELECT ID, NAAM FROM ".$xoopsDB->prefix("stamboom")." WHERE ID=".$seldam;
+	$query = "SELECT ID, NAAM FROM ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID=".$seldam;
 	$result = $xoopsDB->query($query);
 	while ($row = $xoopsDB->fetchArray($result)) 
 	{

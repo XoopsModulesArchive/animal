@@ -42,7 +42,7 @@ if (!empty($xoopsUser))
 }
 
 //count total number of animals
-$numanimal = "SELECT ID from ".$xoopsDB->prefix("stamboom")." NOLIMIT";
+$numanimal = "SELECT ID from ".$xoopsDB->prefix("mod_pedigree_tree")." NOLIMIT";
 $numres = $xoopsDB->query($numanimal);
 //total number of animals the query will find
 $numresults = $xoopsDB -> getRowsNum( $numres );
@@ -60,7 +60,7 @@ for ($x=1; $x<($numpages+1); $x++)
 }
 
 //query
-$queryString = "SELECT d.id as d_id, d.naam as d_naam, d.roft as d_roft, d.moeder as d_moeder, d.vader as d_vader, d.user as d_user, f.id as f_id, f.naam as f_naam, m.id as m_id, m.naam as m_naam, u.uname as u_uname FROM ".$xoopsDB->prefix("stamboom")." d LEFT JOIN ".$xoopsDB->prefix("stamboom")." f ON d.vader = f.id LEFT JOIN ".$xoopsDB->prefix("stamboom")." m ON d.moeder = m.id LEFT JOIN ".$xoopsDB->prefix("users")." u ON d.user = u.uid order by d.id desc LIMIT ".$st.", ".$perp;
+$queryString = "SELECT d.id as d_id, d.naam as d_naam, d.roft as d_roft, d.moeder as d_moeder, d.vader as d_vader, d.user as d_user, f.id as f_id, f.naam as f_naam, m.id as m_id, m.naam as m_naam, u.uname as u_uname FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." f ON d.vader = f.id LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." m ON d.moeder = m.id LEFT JOIN ".$xoopsDB->prefix("users")." u ON d.user = u.uid order by d.id desc LIMIT ".$st.", ".$perp;
 $result = $xoopsDB->query($queryString);
 
 while ($row = $xoopsDB->fetchArray($result)) 

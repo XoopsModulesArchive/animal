@@ -28,13 +28,13 @@ echo "<input type=\"submit\"></form>";
 
 if ($_POST['naar'] != "")
 {
-	$query = "update ".$xoopsDB->prefix("stamboom")." set user4 = '".$_POST['naar']."' where user4 = '".$_POST['van']."'";	
+	$query = "update ".$xoopsDB->prefix("mod_pedigree_tree")." set user4 = '".$_POST['naar']."' where user4 = '".$_POST['van']."'";
 	echo $query."<br />";
 	mysql_query($query);
 }
 
 
-$result=$xoopsDB->query("select user4, count('user4') as X from ".$xoopsDB->prefix("stamboom")." group by 'user4'");
+$result=$xoopsDB->query("select user4, count('user4') as X from ".$xoopsDB->prefix("mod_pedigree_tree")." group by 'user4'");
 $count = 0; $total = 0;
 while ($row = $xoopsDB->fetchArray($result)) 
 {

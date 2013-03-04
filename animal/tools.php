@@ -23,7 +23,7 @@ if (empty($xoopsUser))
 	redirect_header("index.php", 3, _NOPERM."<br />"._PED_REGIST);
 	exit();
 }
-
+global $field;
 //add JS routines
 echo '<script language="JavaScript" src="picker.js"></script>';
 
@@ -251,7 +251,7 @@ function listuserfields()
 {
 	global $xoopsTpl, $xoopsDB, $form;
 	$form .= _PED_FIELD_EXPLAIN4;
-	$sql = "SELECT * FROM ".$xoopsDB->prefix("stamboom_config")." WHERE isActive = '1' ORDER BY `order`";
+	$sql = "SELECT * FROM ".$xoopsDB->prefix("mod_pedigree_fields")." WHERE isActive = '1' ORDER BY `order`";
 	$result = $xoopsDB->query($sql);
 	$numrows = $xoopsDB->getRowsNum($result);
 	$count = 0;
@@ -315,7 +315,7 @@ function listuserfields()
 		$count ++;
 	}
 	$form .= "</table>";
-	$sql = "SELECT * FROM ".$xoopsDB->prefix("stamboom_config")." WHERE isActive = '0' ORDER BY 'ID'";
+	$sql = "SELECT * FROM ".$xoopsDB->prefix("mod_pedigree_fields")." WHERE isActive = '0' ORDER BY 'ID'";
 	$result = $xoopsDB->query($sql);
 	if ($xoopsDB->getRowsNum($result) > 0)
 	{
@@ -332,7 +332,7 @@ function togglelocked($field)
 {
 	global $xoopsDB;
 	//find current status
-	$sql = "SELECT locked from ".$xoopsDB->prefix("stamboom_config")." WHERE ID = '".$field."'";
+	$sql = "SELECT locked from ".$xoopsDB->prefix("mod_pedigree_fields")." WHERE ID = '".$field."'";
 	$result = $xoopsDB->query($sql);
 	while ($row = $xoopsDB->fetchArray($result)) 
 	{
@@ -351,7 +351,7 @@ function togglelocked($field)
 function lock($field)
 {
 	global $xoopsDB;
-	$sql = "UPDATE ".$xoopsDB->prefix("stamboom_config")." SET locked = '1' WHERE ID = '".$field."'";
+	$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_fields")." SET locked = '1' WHERE ID = '".$field."'";
 	mysql_query($sql);
 	return;
 }
@@ -359,7 +359,7 @@ function lock($field)
 function unlock($field)	
 {
 	global $xoopsDB;
-	$sql = "UPDATE ".$xoopsDB->prefix("stamboom_config")." SET locked = '0' WHERE ID = '".$field."'";
+	$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_fields")." SET locked = '0' WHERE ID = '".$field."'";
 	mysql_query($sql);
 	return;
 }
@@ -368,7 +368,7 @@ function fieldmove($field, $move)
 {
 	global $xoopsDB;
 	//find next id
-	$sql = "SELECT * FROM ".$xoopsDB->prefix("stamboom_config")." WHERE isActive = '1' ORDER BY `order`";
+	$sql = "SELECT * FROM ".$xoopsDB->prefix("mod_pedigree_fields")." WHERE isActive = '1' ORDER BY `order`";
 	$result = $xoopsDB->query($sql);
 	while ($row = $xoopsDB->fetchArray($result)) 
 	{
@@ -393,12 +393,12 @@ function fieldmove($field, $move)
 		$nextorder = $valorder[$x-1];
 	}
 	//move value with ID=nextid to original location
-	$sql = "UPDATE ".$xoopsDB->prefix("stamboom_config")." SET `order` = '127' WHERE `order` = '".$nextorder."'";
+	$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_fields")." SET `order` = '127' WHERE `order` = '".$nextorder."'";
 	mysql_query($sql);
-	$sql = "UPDATE ".$xoopsDB->prefix("stamboom_config")." SET `order` = '".$nextorder."' WHERE `order` = '".$currentorder."'";
+	$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_fields")." SET `order` = '".$nextorder."' WHERE `order` = '".$currentorder."'";
 	mysql_query($sql);
 	//move current value into nextvalue's spot
-	$sql = "UPDATE ".$xoopsDB->prefix("stamboom_config")." SET `order` = '".$currentorder."' WHERE `order` = '127'";
+	$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_fields")." SET `order` = '".$currentorder."' WHERE `order` = '127'";
 	mysql_query($sql);
 	listuserfields();
 }
@@ -406,7 +406,7 @@ function fieldmove($field, $move)
 function deluserfield($field)
 {
 	global $xoopsDB;
-	$sql = "UPDATE ".$xoopsDB->prefix("stamboom_config")." SET isActive = '0' WHERE ID = ".$field;
+	$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_fields")." SET isActive = '0' WHERE ID = ".$field;
 	mysql_query($sql);
 	listuserfields();
 }
@@ -414,7 +414,7 @@ function deluserfield($field)
 function restoreuserfield($field)
 {
 	global $xoopsDB;
-	$sql = "UPDATE ".$xoopsDB->prefix("stamboom_config")." SET isActive = '1' WHERE ID = ".$field;
+	$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_fields")." SET isActive = '1' WHERE ID = ".$field;
 	mysql_query($sql);
 	listuserfields();
 }
@@ -531,11 +531,11 @@ function dellookupvalue($field, $id)
 	$sql = "DELETE FROM ".$xoopsDB->prefix("stamboom_lookup".$field)." WHERE ID = ".$id;
 	mysql_query($sql);
 	//change current values to default for deleted value
-	$sql = "UPDATE ".$xoopsDB->prefix("stamboom")." SET user".$field." = '".$default."' WHERE user".$field." = '".$id."'";
+	$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_tree")." SET user".$field." = '".$default."' WHERE user".$field." = '".$id."'";
 	mysql_query($sql);
-	$sql = "UPDATE ".$xoopsDB->prefix("stamboom_temp")." SET user".$field." = '".$default."' WHERE user".$field." = '".$id."'";
+	$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_temp")." SET user".$field." = '".$default."' WHERE user".$field." = '".$id."'";
 	mysql_query($sql);
-	$sql = "UPDATE ".$xoopsDB->prefix("stamboom_trash")." SET user".$field." = '".$default."' WHERE user".$field." = '".$id."'";
+	$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_trash")." SET user".$field." = '".$default."' WHERE user".$field." = '".$id."'";
 	mysql_query($sql);
 	editlookup($field);
 }
@@ -929,13 +929,13 @@ function database_oa()
 	global $xoopsTpl, $xoopsDB;
 	$form = _PED_ANCEST_EXPLAN;
 	$sql = "SELECT d.id AS d_id, d.naam AS d_naam
-			FROM ".$xoopsDB->prefix("stamboom")." d
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." m ON m.id = d.moeder
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." f ON f.id = d.vader
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." mm ON mm.id = m.moeder
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." mf ON mf.id = m.vader
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." fm ON fm.id = f.moeder
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." ff ON ff.id = f.vader
+			FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." m ON m.id = d.moeder
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." f ON f.id = d.vader
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." mm ON mm.id = m.moeder
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." mf ON mf.id = m.vader
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." fm ON fm.id = f.moeder
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." ff ON ff.id = f.vader
 			WHERE 
 			d.moeder = d.id
 			OR d.vader = d.id
@@ -965,8 +965,8 @@ function database_fp()
 	global $xoopsTpl, $xoopsDB;
 	$form = _PED_GENDER_EXPLAN;
 	$sql = "SELECT d.id AS d_id, d.naam AS d_naam, d.moeder as d_moeder, m.roft as m_roft
-			FROM ".$xoopsDB->prefix("stamboom")." d
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." m ON m.id = d.moeder
+			FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." m ON m.id = d.moeder
 			WHERE 
 			d.moeder = m.id
 			AND m.roft = '0' ";
@@ -976,8 +976,8 @@ function database_fp()
 		$form .= "<li><a href=\"dog.php?id=".$row['d_id']."\">".$row['d_naam']."</a> [mother seems to be male]<br />";	
 	}
 	$sql = "SELECT d.id AS d_id, d.naam AS d_naam, d.vader as d_vader, f.roft as f_roft
-			FROM ".$xoopsDB->prefix("stamboom")." d
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." f ON f.id = d.vader
+			FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." f ON f.id = d.vader
 			WHERE 
 			d.vader = f.id
 			AND f.roft = '1' ";
@@ -1000,7 +1000,7 @@ function deleted()
 {
 	global $xoopsTpl, $xoopsDB, $moduleConfig;
 	$form = "Below the line are the animals which have been deleted from your database.<br /><br />By clicking on the name you can reinsert them into the database.<br />By clicking on the 'X' in front of the name you can permanently delete the animal.<hr>";
-	$sql = "SELECT ID, NAAM	FROM ".$xoopsDB->prefix("stamboom_trash");
+	$sql = "SELECT ID, NAAM	FROM ".$xoopsDB->prefix("mod_pedigree_trash");
 	$result = $xoopsDB->query($sql);
 	while ($row = $xoopsDB->fetchArray($result)) 
 	{
@@ -1016,7 +1016,7 @@ function deleted()
 function delperm( $id )
 {
 	global $xoopsTpl, $xoopsDB;
-	$sql = "DELETE FROM ".$xoopsDB->prefix("stamboom_trash")." WHERE ID = ".$id;
+	$sql = "DELETE FROM ".$xoopsDB->prefix("mod_pedigree_trash")." WHERE ID = ".$id;
 	mysql_query($sql);
 	deleted();
 }
@@ -1024,7 +1024,7 @@ function delperm( $id )
 function delall()
 {
 	global $xoopsTpl, $xoopsDB;
-	$sql = "DELETE FROM ".$xoopsDB->prefix("stamboom_trash");
+	$sql = "DELETE FROM ".$xoopsDB->prefix("mod_pedigree_trash");
 	mysql_query($sql);
 	deleted();
 }
@@ -1032,7 +1032,7 @@ function delall()
 function restore( $id )
 {
 	global $xoopsTpl, $xoopsDB;
-	$sql = "SELECT * from ".$xoopsDB->prefix("stamboom_trash")." WHERE ID = ".$id;
+	$sql = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_trash")." WHERE ID = ".$id;
 	$result = $xoopsDB->query($sql);
 	while ($row = $xoopsDB->fetchArray($result)) 
 	{
@@ -1042,9 +1042,9 @@ function restore( $id )
 			$queryvalues .= "'".$values."',";
 		}
 		$outgoing = substr_replace($queryvalues,"",-1);
-		$query = "INSERT INTO ".$xoopsDB->prefix("stamboom")." VALUES (".$outgoing.")";
+		$query = "INSERT INTO ".$xoopsDB->prefix("mod_pedigree_tree")." VALUES (".$outgoing.")";
 		mysql_query($query);
-		$delquery = "DELETE FROM ".$xoopsDB->prefix("stamboom_trash")." WHERE ID = ".$id;
+		$delquery = "DELETE FROM ".$xoopsDB->prefix("mod_pedigree_trash")." WHERE ID = ".$id;
 		mysql_query($delquery);
 		$form .= "<li><a href=\"pedigree.php?pedid=".$row['ID']."\">".$row['NAAM']."</a> has been restored into the database.<hr>";	
 	}

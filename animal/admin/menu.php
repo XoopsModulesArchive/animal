@@ -43,6 +43,42 @@
 // $adminmenu[1]['link'] = "admin/colors.php";
 // $adminmenu[1]['title'] = "Create colours";
 
-
-
-?>
+$dirname = basename( dirname( dirname( __FILE__ ) ) ) ;
+$module_handler =& xoops_gethandler("module");
+$xoopsModule =& XoopsModule::getByDirname($dirname);
+$moduleInfo =& $module_handler->get($xoopsModule->getVar("mid"));
+$pathIcon32 = $moduleInfo->getInfo("icons32");
+$adminmenu = array();
+$i = 1;
+$adminmenu[$i]["title"] = _MI_ANIMAL_ADMENU1;
+$adminmenu[$i]["link"] = "admin/index.php";
+$adminmenu[$i]["icon"] = $pathIcon32."/home.png";
+$i++;
+$adminmenu[$i]["title"] = _MI_ANIMAL_ADMENU2;
+$adminmenu[$i]["link"] = "admin/stamboom_trash.php";
+$adminmenu[$i]["icon"] = $pathIcon32."/alert.png";
+$i++;
+$adminmenu[$i]["title"] = _MI_ANIMAL_ADMENU3;
+$adminmenu[$i]["link"] = "admin/eigenaar.php";
+$adminmenu[$i]["icon"] = $pathIcon32."/user-icon.png";
+$i++;
+$adminmenu[$i]["title"] = _MI_ANIMAL_ADMENU4;
+$adminmenu[$i]["link"] = "admin/stamboom_temp.php";
+$adminmenu[$i]["icon"] = $pathIcon32."/wizard.png";
+$i++;
+$adminmenu[$i]["title"] = _MI_ANIMAL_ADMENU5;
+$adminmenu[$i]["link"] = "admin/stamboom.php";
+$adminmenu[$i]["icon"] = $pathIcon32."/groupmod.png";
+$i++;
+$adminmenu[$i]["title"] = _MI_ANIMAL_ADMENU6;
+$adminmenu[$i]["link"] = "admin/stamboom_config.php";
+$adminmenu[$i]["icon"] = $pathIcon32."/administration.png";
+//$i++;
+//$adminmenu[$i]["title"] = _MI_ANIMAL_ADMENU7;
+//$adminmenu[$i]["link"] = "admin/permissions.php";
+//$adminmenu[$i]["icon"] = $pathIcon32."/permissions.png";
+$i++;
+$adminmenu[$i]["title"] = _MI_ANIMAL_ADMENU8;
+$adminmenu[$i]["link"]  = "admin/about.php";
+$adminmenu[$i]["icon"] = $pathIcon32."/about.png";
+unset( $i );

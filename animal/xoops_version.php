@@ -27,17 +27,41 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-
+if (!defined('XOOPS_ROOT_PATH')) {
+	die('XOOPS root path not defined');
+}
 $modversion['name'] = _MI_PEDIGREE_NAME;
-$modversion['version'] = 1.29;
+$modversion['version'] = 1.30;
 $modversion['description'] = _MI_PEDIGREE_DESC;
 $modversion['credits'] = "http://tech.groups.yahoo.com/group/animalpedigree/";
-$modversion['author'] = "";
-$modversion['help'] = "docs/pedigree_admin.html";
-$modversion['license'] = "GPL";
+$modversion['author'] = "James Cotton";
+//$modversion['help'] = "docs/pedigree_admin.html";
+$modversion['help']        = 'page=help';
+$modversion['license']     = 'GNU GPL 2.0 or later';
+$modversion['license_url'] = "www.gnu.org/licenses/gpl-2.0.html";
 $modversion['official'] = 0;
 $modversion['image'] = "images/pedigree.png";
 $modversion['dirname'] = "animal";
+
+$modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
+$modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
+$modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
+
+$modversion['onInstall'] = 'include/install_function.php';
+$modversion['onUpdate'] = 'include/update_function.php';
+
+//about
+$modversion['release_date']        = '2013/02/02';
+$modversion["module_website_url"]  = "www.xoops.org";
+$modversion["module_website_name"] = "XOOPS";
+$modversion["module_status"]       = "Beta 1";
+$modversion['min_php']             = '5.2';
+$modversion['min_xoops']           = "2.5.5";
+$modversion['min_admin']           = '1.1';
+$modversion['min_db']              = array(
+    'mysql'  => '5.0.7',
+    'mysqli' => '5.0.7'
+);
 
 // SQL file - All tables should not have any prefix!
 $modversion['sqlfile']['mysql'] = "sql/mysql.sql";
@@ -51,6 +75,7 @@ $modversion['tables'][] = "eigenaar";
 
 // Admin things
 $modversion['hasAdmin'] = 1;
+$modversion['system_menu'] = 1;
 $modversion['adminindex'] = "admin/index.php";
 $modversion['adminmenu'] = "admin/menu.php";
 //admin settings

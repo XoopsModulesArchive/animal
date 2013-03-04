@@ -7,7 +7,10 @@
         {
 	        global $field;
             // start the session and initialize the wizard
+            if(!isset($_SESSION))
+            {
             session_start();
+            }
             parent::ZervWizard($_SESSION, __CLASS__);
 
             $this->addStep('Fieldname', _PED_ENTER_FIELD);
@@ -37,7 +40,7 @@
 	        global $xoopsDB, $field;
 			if (!$field == 0) // field allready exists (editing mode)
 			{
-				$sql ="SELECT * from ".$xoopsDB->prefix("stamboom_config")." WHERE ID=".$field;
+				$sql ="SELECT * from ".$xoopsDB->prefix("mod_pedigree_fields")." WHERE ID=".$field;
 	        	$result = $xoopsDB->query($sql);
 	        	while ($row = $xoopsDB->fetchArray($result)) 
 	        	{
@@ -125,7 +128,7 @@
 	        global $xoopsDB;
 			if (!$this->getValue('field') == 0) // field allready exists (editing mode)
 			{
-				$sql ="SELECT * from ".$xoopsDB->prefix("stamboom_config")." WHERE ID='".$this->getValue('field')."'";
+				$sql ="SELECT * from ".$xoopsDB->prefix("mod_pedigree_fields")." WHERE ID='".$this->getValue('field')."'";
 	        	$result = $xoopsDB->query($sql);
 	        	while ($row = $xoopsDB->fetchArray($result)) 
 	        	{
@@ -178,7 +181,7 @@
 	        global $xoopsDB;
 			if (!$this->getValue('field') == 0) // field allready exists (editing mode)
 			{
-				$sql ="SELECT * from ".$xoopsDB->prefix("stamboom_config")." WHERE ID=".$this->getValue('field');
+				$sql ="SELECT * from ".$xoopsDB->prefix("mod_pedigree_fields")." WHERE ID=".$this->getValue('field');
 	        	$result = $xoopsDB->query($sql);
 	        	while ($row = $xoopsDB->fetchArray($result)) 
 	        	{
@@ -214,7 +217,7 @@
 	        global $xoopsDB;
 			if (!$this->getValue('field') == 0) // field allready exists (editing mode)
 			{
-				$sql ="SELECT * from ".$xoopsDB->prefix("stamboom_config")." WHERE ID=".$this->getValue('field');
+				$sql ="SELECT * from ".$xoopsDB->prefix("mod_pedigree_fields")." WHERE ID=".$this->getValue('field');
 	        	$result = $xoopsDB->query($sql);
 	        	while ($row = $xoopsDB->fetchArray($result)) 
 	        	{
@@ -299,19 +302,19 @@
 		    
 	        if (!$this->getValue('field') == 0) // field allready exists (editing mode)
 			{
-				$sql ="UPDATE ".$xoopsDB->prefix("stamboom_config")." SET FieldName = '".htmlSpecialChars($this->getValue('name'))."', FieldType = '".$this->getValue('fieldtype')."', DefaultValue = '".$this->getValue('defaultvalue')."', FieldExplenation = '".$this->getValue('explain')."', HasSearch = '".$search."', Litter = '".$Litter."', Generallitter = '".$Generallitter."', SearchName = '".$searchname."', SearchExplenation = '".$searchexplain."', ViewInPedigree = '".$viewinpedigree."', ViewInAdvanced = '".$viewinadvanced."', ViewInPie = '".$viewinpie."', ViewInList = '".$viewinlist."' WHERE ID ='".$this->getValue('field')."'";
+				$sql ="UPDATE ".$xoopsDB->prefix("mod_pedigree_fields")." SET FieldName = '".htmlSpecialChars($this->getValue('name'))."', FieldType = '".$this->getValue('fieldtype')."', DefaultValue = '".$this->getValue('defaultvalue')."', FieldExplenation = '".$this->getValue('explain')."', HasSearch = '".$search."', Litter = '".$Litter."', Generallitter = '".$Generallitter."', SearchName = '".$searchname."', SearchExplenation = '".$searchexplain."', ViewInPedigree = '".$viewinpedigree."', ViewInAdvanced = '".$viewinadvanced."', ViewInPie = '".$viewinpie."', ViewInList = '".$viewinlist."' WHERE ID ='".$this->getValue('field')."'";
 		        mysql_query($sql);
 		        //possible change defaultvalue for userfield
-		        $sql = "ALTER TABLE ".$xoopsDB->prefix("stamboom")." CHANGE `user".$this->getValue('field')."` `user".$this->getValue('field')."` VARCHAR( 255 ) NOT NULL DEFAULT '".$this->getValue('defaultvalue')."'";
+		        $sql = "ALTER TABLE ".$xoopsDB->prefix("mod_pedigree_tree")." CHANGE `user".$this->getValue('field')."` `user".$this->getValue('field')."` VARCHAR( 255 ) NOT NULL DEFAULT '".$this->getValue('defaultvalue')."'";
 		        mysql_query($sql);
-		        $sql = "ALTER TABLE ".$xoopsDB->prefix("stamboom_temp")." CHANGE `user".$this->getValue('field')."` `user".$this->getValue('field')."` VARCHAR( 1024 ) NOT NULL DEFAULT '".$this->getValue('defaultvalue')."'";
+		        $sql = "ALTER TABLE ".$xoopsDB->prefix("mod_pedigree_temp")." CHANGE `user".$this->getValue('field')."` `user".$this->getValue('field')."` VARCHAR( 1024 ) NOT NULL DEFAULT '".$this->getValue('defaultvalue')."'";
 		        mysql_query($sql);
-		        $sql = "ALTER TABLE ".$xoopsDB->prefix("stamboom_trash")." CHANGE `user".$this->getValue('field')."` `user".$this->getValue('field')."` VARCHAR( 255 ) NOT NULL DEFAULT '".$this->getValue('defaultvalue')."'";
+		        $sql = "ALTER TABLE ".$xoopsDB->prefix("mod_pedigree_trash")." CHANGE `user".$this->getValue('field')."` `user".$this->getValue('field')."` VARCHAR( 255 ) NOT NULL DEFAULT '".$this->getValue('defaultvalue')."'";
 		        mysql_query($sql);
 			}
 			else //this is a new field
 			{
-		        $sql ="SELECT MAX(ID) AS lid from ".$xoopsDB->prefix("stamboom_config")." LIMIT 1";
+		        $sql ="SELECT MAX(ID) AS lid from ".$xoopsDB->prefix("mod_pedigree_fields")." LIMIT 1";
 		        $result = $xoopsDB->query($sql);
 				while ($row = $xoopsDB->fetchArray($result)) 
 		        {
@@ -319,7 +322,7 @@
 		        }
 		        //add userfield to various tables as a new field.
 		        //allways add at the end of the table
-		        $tables = array ('stamboom', 'stamboom_temp', 'stamboom_trash');
+		        $tables = array ('mod_pedigree_tree', 'mod_pedigree_temp', 'mod_pedigree_trash');
 		        foreach ($tables as $table)
 		        {
 			        $SQL = "ALTER TABLE ".$xoopsDB->prefix($table)." ADD `user".$nextfieldnum."` VARCHAR( 255 ) NOT NULL DEFAULT '".$this->getValue('defaultvalue')."'";
@@ -346,7 +349,7 @@
 			    }
 		        
 		        //Insert new record into stamboom_config
-		        $sql ="INSERT INTO ".$xoopsDB->prefix("stamboom_config")." VALUES ('".$nextfieldnum."', '1', '".htmlSpecialChars($this->getValue('name'))."', '".$this->getValue('fieldtype')."', '".$lookup."', '".$this->getValue('defaultvalue')."', '".$this->getValue('explain')."', '".$search."', '".$Litter."', '".$Generallitter."', '".$searchname."', '".$searchexplain."', '".$viewinpedigree."', '".$viewinadvanced."', '".$viewinpie."', '".$viewinlist."','','".$nextfieldnum."')";
+		        $sql ="INSERT INTO ".$xoopsDB->prefix("mod_pedigree_fields")." VALUES ('".$nextfieldnum."', '1', '".htmlSpecialChars($this->getValue('name'))."', '".$this->getValue('fieldtype')."', '".$lookup."', '".$this->getValue('defaultvalue')."', '".$this->getValue('explain')."', '".$search."', '".$Litter."', '".$Generallitter."', '".$searchname."', '".$searchexplain."', '".$viewinpedigree."', '".$viewinadvanced."', '".$viewinpie."', '".$viewinlist."','','".$nextfieldnum."')";
 		        mysql_query($sql);
         	}
 		}

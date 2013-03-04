@@ -9,7 +9,7 @@ function pedigree_search($queryarray, $andor, $limit, $offset, $userid){
         // Start creating a sql string that will be used to retrieve the fields in the table
         // that your module is making available to search
 
-        $sql = "SELECT id,NAAM,nhsb,user FROM ".$xoopsDB->prefix("stamboom")." ";
+        $sql = "SELECT id,NAAM,nhsb,user FROM ".$xoopsDB->prefix("mod_pedigree_tree")." ";
 
         // because count() returns 1 even if a supplied variable
         // is not an array, we must check if $querryarray is really an array

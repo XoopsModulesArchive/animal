@@ -16,11 +16,11 @@ class Animal
 		global $xoopsDB;
 		if ($animalnumber == 0)
 		{
-			$SQL = "SELECT * from ".$xoopsDB->prefix("stamboom")." WHERE ID = '1'";
+			$SQL = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID = '1'";
 		}
 		else
 		{
-			$SQL = "SELECT * from ".$xoopsDB->prefix("stamboom")." WHERE ID = ".$animalnumber;
+			$SQL = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID = ".$animalnumber;
 		}
 		$result = $xoopsDB->query($SQL);
 		$row = $xoopsDB->fetchRow($result);
@@ -35,7 +35,8 @@ class Animal
 	function numoffields()
 	{
 		global $xoopsDB;
-		$SQL = "SELECT * from ".$xoopsDB->prefix("stamboom_config")." ORDER BY `order`";
+		$SQL = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_fields")." ORDER BY `order`";
+        $fields = array();
 		$result = $xoopsDB->query($SQL);
 		$count = 0;
 		while ($row = $xoopsDB->fetchArray($result)) 
@@ -45,7 +46,7 @@ class Animal
 			$configvalues[] = $row;
 
 		}
-		$this->configvalues = $configvalues;
+		$this->configvalues = isset($configvalues) ? $configvalues : '';
 		//print_r ($this->configvalues); die();
 		return $fields;	
 	}	
@@ -576,7 +577,7 @@ class SISContext
        $this->_depth    = 0;
    }
 
-   function goto($url, $name)
+   function mygoto($url, $name)
    {
        $keys = array_keys($this->_contexts);
        for($i=0; $i<$this->_depth; $i++)

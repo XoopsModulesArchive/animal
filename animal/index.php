@@ -55,7 +55,7 @@ function index_main()
 	$xoopsTpl->assign("explain", _PED_EXPLAIN);
 	$xoopsTpl->assign("sname", _PED_SEARCHNAME);
 	$xoopsTpl->assign("snameex", strtr(_PED_SEARCHNAME_EX, array( '[animalTypes]' => $moduleConfig['animalTypes'] )));
-	$xoopsTpl->assign("usersearch", $usersearch);
+	$xoopsTpl->assign("usersearch", (isset($usersearch) ? $usersearch:''));
 }
 
 ?>

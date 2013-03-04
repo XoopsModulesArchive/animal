@@ -1,0 +1,12 @@
+---------------------------------------
+1.30 Beta 1  2013-03-03
+---------------------------------------
+
+- Converted to XOOPS 2.5.5 Admin GUI (Mamba)
+- Added classes for tables
+- renamed tables to follow XOOPS new standard "mod_module_table"
+- updated for PHP 5.4
+
+---------------------------------------
+1.29 Final  ????
+---------------------------------------

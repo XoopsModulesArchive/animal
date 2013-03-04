@@ -22,7 +22,7 @@ if (empty($xoopsUser))
 	exit();
 }
 
-$f = $_GET['f'];
+$f = isset($_GET['f']) ? $_GET['f'] : '';
 if ($f == "check") { check(); }
 
 function check()
@@ -41,7 +41,7 @@ function check()
 	$website= $_POST['website'];
 	$user = $_POST['user'];
 	//insert into eigenaar
-		$query = "INSERT INTO ".$xoopsDB->prefix("eigenaar")." VALUES ('','".$voornaam."','".$achternaam."','','','','','','".$email."','".$website."','".$user."')";
+		$query = "INSERT INTO ".$xoopsDB->prefix("mod_pedigree_owner")." VALUES ('','".$voornaam."','".$achternaam."','','','','','','".$email."','".$website."','".$user."')";
 		$xoopsDB->query($query);
 		redirect_header("index.php", 1, "The data has been stored.");
 }

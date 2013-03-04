@@ -90,7 +90,7 @@ function checkname()
 	
 	$name = $_POST['NAAM'];
 	//query
-	$queryString = "SELECT * from ".$xoopsDB->prefix("stamboom")." WHERE NAAM LIKE'%".$name."%' ORDER BY NAAM";
+	$queryString = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE NAAM LIKE'%".$name."%' ORDER BY NAAM";
 	$result = $xoopsDB->query($queryString);
 	$numresults = $xoopsDB -> getRowsNum( $result );
 	if ($numresults >= 1 && !(isset($_GET['r'])))
@@ -138,7 +138,7 @@ function checkname()
 		{
 			//breeder
 			$breeder_select = new XoopsFormSelect("<b>"._PED_FLD_BREE."</b>", $name="id_fokker", $value='0', $size=1, $multiple=false);
-			$queryfok = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("eigenaar")." ORDER BY lastname";
+			$queryfok = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("mod_pedigree_owner")." ORDER BY lastname";
 			$resfok = $xoopsDB->query($queryfok);
 			$breeder_select -> addOption( '0', $name=_PED_UNKNOWN, $disabled=false );
 			while ($rowfok = $xoopsDB->fetchArray($resfok))
@@ -150,7 +150,7 @@ function checkname()
 			
 			//owner
 			$owner_select = new XoopsFormSelect("<b>"._PED_FLD_OWNE."</b>", $name="id_eigenaar", $value='0', $size=1, $multiple=false);
-			$queryfok = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("eigenaar")." ORDER BY lastname";
+			$queryfok = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("mod_pedigree_owner")." ORDER BY lastname";
 			$resfok = $xoopsDB->query($queryfok);
 			$owner_select -> addOption( '0', $name=_PED_UNKNOWN, $disabled=false );
 			while ($rowfok = $xoopsDB->fetchArray($resfok))
@@ -280,7 +280,7 @@ function sire()
 		}
 		
 		//insert into stamboom_temp
-		$query = "INSERT INTO ".$xoopsDB->prefix("stamboom_temp")." VALUES ('".$random."','".unhtmlentities($name)."','".$id_eigenaar."','".$id_fokker."','".$user."','".$roft."','','','".$foto."', ''".$usersql.")";
+		$query = "INSERT INTO ".$xoopsDB->prefix("mod_pedigree_temp")." VALUES ('".$random."','".unhtmlentities($name)."','".$id_eigenaar."','".$id_fokker."','".$user."','".$roft."','','','".$foto."', ''".$usersql.")";
 		//echo $query; die();
 		$xoopsDB->query($query);
 		redirect_header("add_dog.php?f=sire&random=".$random."&st=".$st."&r=1&l=a", 1, strtr(_PED_ADD_SIREPLZ, array( '[father]' => $moduleConfig['father'] )));
@@ -293,7 +293,7 @@ function sire()
 	//create list of males dog to select from
 	$perp = $moduleConfig['perpage'];
 	//count total number of dogs
-	$numdog = "SELECT count(ID) from ".$xoopsDB->prefix("stamboom")." WHERE roft='0' and NAAM LIKE '".$l."%'";
+	$numdog = "SELECT count(ID) from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE roft='0' and NAAM LIKE '".$l."%'";
 	$numres = $xoopsDB->query($numdog);
 	//total number of dogs the query will find
 	list($numresults) = $xoopsDB->fetchRow($numres);
@@ -350,7 +350,7 @@ function sire()
 	}
 	
 	//query
-	$queryString = "SELECT * from ".$xoopsDB->prefix("stamboom")." WHERE roft = '0' and NAAM like '".$l."%'ORDER BY NAAM LIMIT ".$st.", ".$perp;
+	$queryString = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE roft = '0' and NAAM like '".$l."%'ORDER BY NAAM LIMIT ".$st.", ".$perp;
 	$result = $xoopsDB->query($queryString);
 	
 	
@@ -464,7 +464,7 @@ function dam()
 	if (!isset($_GET['r']))
 	{	
 		//insert into stamboom_temp
-		$query = "UPDATE ".$xoopsDB->prefix("stamboom_temp")." SET vader =".$_GET['selsire']." WHERE ID=".$random;
+		$query = "UPDATE ".$xoopsDB->prefix("mod_pedigree_temp")." SET vader =".$_GET['selsire']." WHERE ID=".$random;
 		$xoopsDB->queryf($query);
 		redirect_header("add_dog.php?f=dam&random=".$random."&st=".$st."&r=1&l=a", 1, strtr(_PED_ADD_SIREOK, array( '[mother]' => $moduleConfig['mother'] )));
 	}
@@ -473,7 +473,7 @@ function dam()
 	//create list of males dog to select from
 	$perp = $moduleConfig['perpage'];
 	//count total number of dogs
-	$numdog = "SELECT count(ID) from ".$xoopsDB->prefix("stamboom")." WHERE roft='1' and NAAM LIKE '".$l."%'";
+	$numdog = "SELECT count(ID) from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE roft='1' and NAAM LIKE '".$l."%'";
 	$numres = $xoopsDB->query($numdog);
 	list($numresults) = $xoopsDB->fetchRow($numres);
 	$numpages = (floor($numresults/$perp))+1;
@@ -519,7 +519,7 @@ function dam()
 	}
 	
 	//query
-	$queryString = "SELECT * from ".$xoopsDB->prefix("stamboom")." WHERE roft = '1' and NAAM LIKE '".$l."%' ORDER BY NAAM LIMIT ".$st.", ".$perp;
+	$queryString = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE roft = '1' and NAAM LIKE '".$l."%' ORDER BY NAAM LIMIT ".$st.", ".$perp;
 	$result = $xoopsDB->query($queryString);
 	
 	$animal = new Animal( );
@@ -623,7 +623,7 @@ function check()
 	
 	
 	//query
-	$queryString = "SELECT * from ".$xoopsDB->prefix("stamboom_temp")." WHERE ID = ".$random;
+	$queryString = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_temp")." WHERE ID = ".$random;
 	$result = $xoopsDB->query($queryString);
 	while ($row = $xoopsDB->fetchArray($result)) 
 	{
@@ -649,11 +649,11 @@ function check()
 			//echo $fields[$i]."<br/>";	
 		}
 		//insert into stamboom
-		$query = "INSERT INTO ".$xoopsDB->prefix("stamboom")." VALUES ('','".addslashes($row['NAAM'])."','".$row['id_eigenaar']."','".$row['id_fokker']."','".$row['user']."','".$row['roft']."','".$_GET['seldam']."','".$row['vader']."','".addslashes($row['foto'])."',''".$usersql.")";
+		$query = "INSERT INTO ".$xoopsDB->prefix("mod_pedigree_tree")." VALUES ('','".addslashes($row['NAAM'])."','".$row['id_eigenaar']."','".$row['id_fokker']."','".$row['user']."','".$row['roft']."','".$_GET['seldam']."','".$row['vader']."','".addslashes($row['foto'])."',''".$usersql.")";
 		mysql_query($query);
 		//echo $query; die();
 	}
-	$sqlquery = "DELETE from ".$xoopsDB->prefix("stamboom_temp")." where ID='".$random."'";
+	$sqlquery = "DELETE from ".$xoopsDB->prefix("mod_pedigree_temp")." where ID='".$random."'";
 	$xoopsDB->queryf($sqlquery);
 	redirect_header("latest.php",1,strtr(_PED_ADD_OK, array( '[animalType]' => $moduleConfig['animalType'] )));	
 }

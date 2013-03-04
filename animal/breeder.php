@@ -9,7 +9,9 @@ else
 // Include any common code for this module.
 
 // Get all HTTP post or get parameters into global variables that are prefixed with "param_"
-import_request_variables("gp", "param_");
+//import_request_variables("gp", "param_");
+extract($_GET, EXTR_PREFIX_ALL, "param");
+extract($_POST, EXTR_PREFIX_ALL, "param");
 
 $xoopsOption['template_main'] = "pedigree_breeder.html";
 
@@ -52,7 +54,7 @@ if (!empty($xoopsUser))
 }
 
 //count total number of owners
-$numowner = "SELECT count(ID) from ".$xoopsDB->prefix("eigenaar")." WHERE ".$f." LIKE '".$w."'";
+$numowner = "SELECT count(ID) from ".$xoopsDB->prefix("mod_pedigree_owner")." WHERE ".$f." LIKE '".$w."'";
 $numres = $xoopsDB->query($numowner);
 //total number of owners the query will find
 list($numresults) = $xoopsDB->fetchRow($numres);
@@ -120,7 +122,7 @@ if ($numpages > 1)
 }
 
 //query
-$queryString = "SELECT * from ".$xoopsDB->prefix("eigenaar")." WHERE ".$f." LIKE '".$w."' ORDER BY ".$o." ".$d." LIMIT ".$st.", ".$perp;
+$queryString = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_owner")." WHERE ".$f." LIKE '".$w."' ORDER BY ".$o." ".$d." LIMIT ".$st.", ".$perp;
 $result = $xoopsDB->query($queryString);
 
 while ($row = $xoopsDB->fetchArray($result)) 

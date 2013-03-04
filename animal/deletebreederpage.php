@@ -29,7 +29,7 @@ $ownername = $_POST['curname'];
 
 if (!empty($ownername)) 
 {
-	$queryString = "SELECT * from ".$xoopsDB->prefix("eigenaar")." WHERE ID=".$ownid;
+	$queryString = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_owner")." WHERE ID=".$ownid;
 	$result = $xoopsDB->query($queryString);
 	while ($row = $xoopsDB->fetchArray($result)) 
 	{
@@ -49,11 +49,11 @@ if (!empty($ownername))
 		}
 		if ($access == "1")
 		{ 
-			$delsql = "DELETE FROM ".$xoopsDB->prefix("eigenaar")." WHERE ID =".$row['ID'];
+			$delsql = "DELETE FROM ".$xoopsDB->prefix("mod_pedigree_owner")." WHERE ID =".$row['ID'];
 			mysql_query($delsql);
-			$sql = "UPDATE ".$xoopsDB->prefix("stamboom")." SET id_eigenaar = '0' where id_eigenaar = ".$row['ID'];
+			$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_tree")." SET id_eigenaar = '0' where id_eigenaar = ".$row['ID'];
 			mysql_query($sql);
-			$sql = "UPDATE ".$xoopsDB->prefix("stamboom")." SET id_fokker = '0' where id_fokker = ".$row['ID'];
+			$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_tree")." SET id_fokker = '0' where id_fokker = ".$row['ID'];
 			mysql_query($sql);
 			$ch = 1;
 		}

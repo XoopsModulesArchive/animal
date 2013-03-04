@@ -50,21 +50,21 @@ function PrintPage()
 	mfm.naam as mfm_naam, 
 	mmm.id as mmm_id, 
 	mmm.naam as mmm_naam 
-	FROM ".$xoopsDB->prefix("stamboom")." d 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." f ON d.vader = f.id 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." m ON d.moeder = m.id 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." ff ON f.vader = ff.id 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." fff ON ff.vader = fff.id 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." ffm ON ff.moeder = ffm.id 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." mf ON m.vader = mf.id 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." mff ON mf.vader = mff.id 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." mfm ON mf.moeder = mfm.id 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." fm ON f.moeder = fm.id 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." fmf ON fm.vader = fmf.id 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." fmm ON fm.moeder = fmm.id 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." mm ON m.moeder = mm.id 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." mmf ON mm.vader = mmf.id 
-	LEFT JOIN ".$xoopsDB->prefix("stamboom")." mmm ON mm.moeder = mmm.id 
+	FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." f ON d.vader = f.id
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." m ON d.moeder = m.id
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." ff ON f.vader = ff.id
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." fff ON ff.vader = fff.id
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." ffm ON ff.moeder = ffm.id
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." mf ON m.vader = mf.id
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." mff ON mf.vader = mff.id
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." mfm ON mf.moeder = mfm.id
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." fm ON f.moeder = fm.id
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." fmf ON fm.vader = fmf.id
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." fmm ON fm.moeder = fmm.id
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." mm ON m.moeder = mm.id
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." mmf ON mm.vader = mmf.id
+	LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." mmm ON mm.moeder = mmm.id
 	where d.id=$dogid";
 		
 	$result = $xoopsDB->query($queryString);

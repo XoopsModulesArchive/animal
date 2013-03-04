@@ -39,7 +39,9 @@ if ( file_exists("../language/".$xoopsConfig['language']."/modinfo.php") ) {
 require_once(XOOPS_ROOT_PATH ."/modules/animal/admin/menu.php");
 
 // Get HTTP post/get parameters.
-import_request_variables("gp", "param_");
+//import_request_variables("gp", "param_");
+extract($_GET, EXTR_PREFIX_ALL, "param");
+extract($_POST, EXTR_PREFIX_ALL, "param");
 
 //
 // Writes out the form to get all config parameters.

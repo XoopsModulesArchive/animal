@@ -79,7 +79,7 @@ if (!empty($xoopsUser))
 }
 
 //count total number of dogs
-$numdog = "SELECT count(ID) from ".$xoopsDB->prefix("stamboom")." WHERE ".$f." ".$l." '".$w."'";
+$numdog = "SELECT count(ID) from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ".$f." ".$l." '".$w."'";
 $numres = $xoopsDB->query($numdog);
 //total number of dogs the query will find
 list($numresults) = $xoopsDB->fetchRow($numres);
@@ -140,7 +140,7 @@ if ($numpages > 1)
 }
 
 //query
-$queryString = "SELECT * from ".$xoopsDB->prefix("stamboom")." WHERE ".$f." ".$l." '".$w."' ORDER BY ".$o." ".$d." LIMIT ".$st.", ".$perp;
+$queryString = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ".$f." ".$l." '".$w."' ORDER BY ".$o." ".$d." LIMIT ".$st.", ".$perp;
 $result = $xoopsDB->query($queryString);
 
 $animal = new Animal( );

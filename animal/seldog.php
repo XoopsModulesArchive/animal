@@ -10,7 +10,9 @@ else
 require_once(XOOPS_ROOT_PATH ."/modules/animal/include/functions.php");
 
 // Get all HTTP post or get parameters into global variables that are prefixed with "param_"
-import_request_variables("gp", "param_");
+//import_request_variables("gp", "param_");
+extract($_GET, EXTR_PREFIX_ALL, "param");
+extract($_POST, EXTR_PREFIX_ALL, "param");
 
 $xoopsOption['template_main'] = "pedigree_sel.html";
 
@@ -42,7 +44,7 @@ $xoopsTpl->assign("page_title", _MI_PEDIGREE_TITLE);
 
 
 //count total number of dogs
-$numdog = "SELECT ID from ".$xoopsDB->prefix("stamboom")." WHERE NAAM LIKE '".$letter."%' and roft = '".$gend."'";
+$numdog = "SELECT ID from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE NAAM LIKE '".$letter."%' and roft = '".$gend."'";
 $numres = $xoopsDB->query($numdog);
 //total number of dogs the query will find
 $numresults = $xoopsDB -> getRowsNum( $numres );
@@ -100,7 +102,7 @@ if ($numpages > 1)
 
 
 //query
-$queryString = "SELECT * FROM ".$xoopsDB->prefix("stamboom")." where NAAM like '".$letter."%' and roft = '".$gend."' order by NAAM LIMIT ".$st.", ".$perp;
+$queryString = "SELECT * FROM ".$xoopsDB->prefix("mod_pedigree_tree")." where NAAM like '".$letter."%' and roft = '".$gend."' order by NAAM LIMIT ".$st.", ".$perp;
 $result = $xoopsDB->query($queryString);
 
 $animal = new Animal( );

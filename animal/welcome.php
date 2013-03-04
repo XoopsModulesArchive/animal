@@ -17,7 +17,7 @@ global $xoopsTpl, $xoopsDB, $myts;
 $myts =& MyTextSanitizer::getInstance(); // MyTextSanitizer object
 
 //query to count dogs
-$result=$xoopsDB->query("select count(*) from ".$xoopsDB->prefix("stamboom"));
+$result=$xoopsDB->query("select count(*) from ".$xoopsDB->prefix("mod_pedigree_tree"));
 list($numdogs) = $xoopsDB->fetchRow($result);
 
 //get module configuration

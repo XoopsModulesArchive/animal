@@ -10,7 +10,9 @@ else
 require_once(XOOPS_ROOT_PATH ."/modules/animal/include/functions.php");
 
 // Get all HTTP post or get parameters into global variables that are prefixed with "param_"
-import_request_variables("gp", "param_");
+//import_request_variables("gp", "param_");
+extract($_GET, EXTR_PREFIX_ALL, "param");
+extract($_POST, EXTR_PREFIX_ALL, "param");
 
 $xoopsOption['template_main'] = "pedigree_result.html";
 
@@ -37,7 +39,7 @@ $com = $_GET['com'];
 if (!$com) $com = "vader";
 
 //count total number of dogs
-$numdog = "SELECT count( ".$com." ) AS X, ".$com." FROM ".$xoopsDB->prefix("stamboom")." WHERE ".$com." !=0 GROUP BY ".$com;
+$numdog = "SELECT count( ".$com." ) AS X, ".$com." FROM ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ".$com." !=0 GROUP BY ".$com;
 $numres = $xoopsDB->query($numdog);
 //total number of dogs the query will find
 $numresults = $xoopsDB -> getRowsNum( $numres );
@@ -75,7 +77,7 @@ if ($numpages > 1)
 	}
 }
 //query
-$queryString = "SELECT count( d.".$com." ) AS X, d.".$com.", p.NAAM as p_NAAM, p.vader as p_vader, p.moeder as p_moeder, p.coi as p_coi, p.foto as p_foto FROM ".$xoopsDB->prefix("stamboom")." d LEFT JOIN ".$xoopsDB->prefix("stamboom")." p ON d.".$com." = p.id WHERE d.".$com." !=0 GROUP BY d.".$com." ORDER BY X DESC LIMIT ".$st.", ".$perp;
+$queryString = "SELECT count( d.".$com." ) AS X, d.".$com.", p.NAAM as p_NAAM, p.vader as p_vader, p.moeder as p_moeder, p.coi as p_coi, p.foto as p_foto FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." p ON d.".$com." = p.id WHERE d.".$com." !=0 GROUP BY d.".$com." ORDER BY X DESC LIMIT ".$st.", ".$perp;
 $result = $xoopsDB->query($queryString);
 
 while ($row = $xoopsDB->fetchArray($result)) 

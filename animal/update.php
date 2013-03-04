@@ -40,7 +40,7 @@ $myts = &MyTextSanitizer::getInstance();
 $fld= $_GET['fld'];
 $id = $_GET['id'];
 //query (find values for this dog (and format them))
-$queryString = "SELECT * from ".$xoopsDB->prefix("stamboom")." WHERE ID=".$id;
+$queryString = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID=".$id;
 $result = $xoopsDB->query($queryString);
 
 while ($row = $xoopsDB->fetchArray($result)) 
@@ -51,7 +51,7 @@ while ($row = $xoopsDB->fetchArray($result))
 	$naam = htmlentities(stripslashes($row['NAAM']), ENT_QUOTES);
 	$namelink = "<a href=\"dog.php?id=".$row['ID']."\">".stripslashes($row['NAAM'])."</a>";
 	//owner
-	$queryeig = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("eigenaar")." WHERE ID=".$row['id_eigenaar'];
+	$queryeig = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("mod_pedigree_owner")." WHERE ID=".$row['id_eigenaar'];
 	$reseig = $xoopsDB->query($queryeig);
 	while ($roweig = $xoopsDB->fetchArray($reseig))
 	{
@@ -59,7 +59,7 @@ while ($row = $xoopsDB->fetchArray($result))
 	}
 	$curvaleig = $row['id_eigenaar'];
 	//breeder
-	$queryfok = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("eigenaar")." WHERE ID=".$row['id_fokker'];
+	$queryfok = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("mod_pedigree_owner")." WHERE ID=".$row['id_fokker'];
 	$resfok = $xoopsDB->query($queryfok);
 	while ($rowfok = $xoopsDB->fetchArray($resfok))
 	{
@@ -79,7 +79,7 @@ while ($row = $xoopsDB->fetchArray($result))
 	//Sire
 	if ($row['vader'] != 0)
 	{
-		$querysire = "SELECT NAAM from ".$xoopsDB->prefix("stamboom")." WHERE ID=".$row['vader'];
+		$querysire = "SELECT NAAM from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID=".$row['vader'];
 		$ressire = $xoopsDB->query($querysire);
 		while ($rowsire = $xoopsDB->fetchArray($ressire))
 		{
@@ -89,7 +89,7 @@ while ($row = $xoopsDB->fetchArray($result))
 	//Dam
 	if ($row['moeder'] != 0)
 	{
-		$querydam = "SELECT NAAM from ".$xoopsDB->prefix("stamboom")." WHERE ID=".$row['moeder'];
+		$querydam = "SELECT NAAM from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID=".$row['moeder'];
 		$resdam = $xoopsDB->query($querydam);
 		while ($rowdam = $xoopsDB->fetchArray($resdam))
 		{
@@ -132,7 +132,7 @@ else
 if ($fld == "ow" || $fld == "all")
 {
 	$owner_select = new XoopsFormSelect("<b>"._PED_FLD_OWNE."</b>", $name="id_eigenaar", $value=null, $size=1, $multiple=false);
-	$queryeig = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("eigenaar")." ORDER BY `lastname`";
+	$queryeig = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("mod_pedigree_owner")." ORDER BY `lastname`";
 	$reseig = $xoopsDB->query($queryeig);
 	$owner_select -> addOption( 0, $name=_PED_UNKNOWN, $disabled=false );
 	while ($roweig = $xoopsDB->fetchArray($reseig))
@@ -150,7 +150,7 @@ if ($fld == "ow" || $fld == "all")
 if ($fld == "br" || $fld == "all")
 {
 	$breeder_select = new XoopsFormSelect("<b>"._PED_FLD_BREE."</b>", $name="id_fokker", $value=null, $size=1, $multiple=false);
-	$queryfok = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("eigenaar")." ORDER BY `lastname`";
+	$queryfok = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("mod_pedigree_owner")." ORDER BY `lastname`";
 	$resfok = $xoopsDB->query($queryfok);
 	$breeder_select -> addOption( 0, $name=_PED_UNKNOWN, $disabled=false );
 	while ($rowfok = $xoopsDB->fetchArray($resfok))

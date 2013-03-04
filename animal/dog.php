@@ -11,13 +11,16 @@ require_once(XOOPS_ROOT_PATH ."/modules/animal/include/functions.php");
 require_once(XOOPS_ROOT_PATH ."/modules/animal/include/class_field.php");
 
 // Get all HTTP post or get parameters into global variables that are prefixed with "param_"
-import_request_variables("gp", "param_");
+//import_request_variables("gp", "param_");
+extract($_GET, EXTR_PREFIX_ALL, "param");
+extract($_POST, EXTR_PREFIX_ALL, "param");
 
 $xoopsOption['template_main'] = "pedigree_dog.html";
 
 include XOOPS_ROOT_PATH.'/header.php';
 
 global $xoopsUser, $xoopsTpl, $xoopsDB, $xoopsModuleConfig;
+xoops_load('XoopsUserUtility');
 
 //get module configuration
 $module_handler =& xoops_gethandler('module');
@@ -39,11 +42,11 @@ else
 
 if($_GET['delpicture'] == 'true')
 {
-	$delpicsql = "UPDATE ".$xoopsDB->prefix("stamboom")." SET foto = '' WHERE ID = '".$id."'";
+	$delpicsql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_tree")." SET foto = '' WHERE ID = '".$id."'";
 	mysql_query($delpicsql);	
 }
 //query
-$queryString = "SELECT * from ".$xoopsDB->prefix("stamboom")." WHERE ID=".$id;
+$queryString = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID=".$id;
 $result = $xoopsDB->query($queryString);
 
 while ($row = $xoopsDB->fetchArray($result)) 
@@ -54,7 +57,7 @@ while ($row = $xoopsDB->fetchArray($result))
 	//owner
 	if($row['id_eigenaar'] != '0')
 	{
-		$queryeig = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("eigenaar")." WHERE ID=".$row['id_eigenaar'];
+		$queryeig = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("mod_pedigree_owner")." WHERE ID=".$row['id_eigenaar'];
 		$reseig = $xoopsDB->query($queryeig);
 		while ($roweig = $xoopsDB->fetchArray($reseig))
 		{
@@ -68,7 +71,7 @@ while ($row = $xoopsDB->fetchArray($result))
 	//breeder
 	if($row['id_fokker'] != '0')
 	{
-		$queryfok = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("eigenaar")." WHERE ID=".$row['id_fokker'];
+		$queryfok = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("mod_pedigree_owner")." WHERE ID=".$row['id_fokker'];
 		$resfok = $xoopsDB->query($queryfok);
 		while ($rowfok = $xoopsDB->fetchArray($resfok))
 		{
@@ -85,7 +88,7 @@ while ($row = $xoopsDB->fetchArray($result))
 	//Sire
 	if ($row['vader'] != 0)
 	{
-		$querysire = "SELECT NAAM from ".$xoopsDB->prefix("stamboom")." WHERE ID=".$row['vader'];
+		$querysire = "SELECT NAAM from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID=".$row['vader'];
 		$ressire = $xoopsDB->query($querysire);
 		while ($rowsire = $xoopsDB->fetchArray($ressire))
 		{
@@ -99,7 +102,7 @@ while ($row = $xoopsDB->fetchArray($result))
 	//Dam
 	if ($row['moeder'] != 0)
 	{
-		$querydam = "SELECT NAAM from ".$xoopsDB->prefix("stamboom")." WHERE ID=".$row['moeder'];
+		$querydam = "SELECT NAAM from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID=".$row['moeder'];
 		$resdam = $xoopsDB->query($querydam);
 		while ($rowdam = $xoopsDB->fetchArray($resdam))
 		{
@@ -262,7 +265,7 @@ while ($row = $xoopsDB->fetchArray($result))
 	if ($moduleConfig['proversion'] == '1')
 	{
 		$items[] = array ('header' 	=> _PED_FLD_DBUS, 
-							'data' 	=> xoops_getLinkedUnameFromId($row['user']), 
+							'data' 	=> XoopsUserUtility::getUnameFromId($row['user']),
 							'edit'	=> "" );
 	}
 	//inbred pedigree

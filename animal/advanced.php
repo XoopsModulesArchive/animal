@@ -20,7 +20,8 @@ include XOOPS_ROOT_PATH.'/header.php';
 require_once(XOOPS_ROOT_PATH ."/modules/animal/include/functions.php");
 
 global $xoopsTpl, $xoopsDB;
-
+$totpl = array();
+$books = array();
 //get module configuration
 $module_handler =& xoops_gethandler('module');
 $module         =& $module_handler->getByDirname('animal');
@@ -39,11 +40,11 @@ $body		=	$colors[6];
 $title		=	$colors[7];
 
 //query to count male dogs
-$result=$xoopsDB->query("select count(id) from ".$xoopsDB->prefix("stamboom")." where roft='0'");
+$result=$xoopsDB->query("select count(id) from ".$xoopsDB->prefix("mod_pedigree_tree")." where roft='0'");
 list($countmales) = $xoopsDB->fetchRow($result);
 
 //query to count female dogs
-$result=$xoopsDB->query("select count(id) from ".$xoopsDB->prefix("stamboom")." where roft='1'");
+$result=$xoopsDB->query("select count(id) from ".$xoopsDB->prefix("mod_pedigree_tree")." where roft='1'");
 list($countfemales) = $xoopsDB->fetchRow($result);
 
 //create pie for number of males/females
@@ -72,7 +73,7 @@ for ($i = 0; $i < count($fields); $i++)
 	$fieldobject = new $fieldType( $userfield, $animal );
 	if ($userfield->active() && $userfield->inadvanced())
 	{
-		$queryString = "select count(p.user".$fields[$i].") as X, p.user".$fields[$i]." as p_user".$fields[$i].", b.ID as b_id, b.value as b_value from ".$xoopsDB->prefix("stamboom")." p LEFT JOIN ".$xoopsDB->prefix("stamboom_lookup".$fields[$i])." b ON p.user".$fields[$i]." = b.ID GROUP BY p.user".$fields[$i]." ORDER BY X DESC";
+		$queryString = "select count(p.user".$fields[$i].") as X, p.user".$fields[$i]." as p_user".$fields[$i].", b.ID as b_id, b.value as b_value from ".$xoopsDB->prefix("mod_pedigree_tree")." p LEFT JOIN ".$xoopsDB->prefix("stamboom_lookup".$fields[$i])." b ON p.user".$fields[$i]." = b.ID GROUP BY p.user".$fields[$i]." ORDER BY X DESC";
 		$result = $xoopsDB->query($queryString);
 		$piecount = 0;
 		unset($data);

@@ -33,7 +33,7 @@ $myts = &MyTextSanitizer::getInstance();
 $fld= $_GET['fld'];
 $id = $_GET['id'];
 //query (find values for this owner/breeder (and format them))
-$queryString = "SELECT * from ".$xoopsDB->prefix("eigenaar")." WHERE ID=".$id;
+$queryString = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_owner")." WHERE ID=".$id;
 $result = $xoopsDB->query($queryString);
 
 while ($row = $xoopsDB->fetchArray($result)) 

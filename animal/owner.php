@@ -10,7 +10,9 @@ else
 require_once(XOOPS_ROOT_PATH ."/modules/animal/include/functions.php");
 
 // Get all HTTP post or get parameters into global variables that are prefixed with "param_"
-import_request_variables("gp", "param_");
+//import_request_variables("gp", "param_");
+extract($_GET, EXTR_PREFIX_ALL, "param");
+extract($_POST, EXTR_PREFIX_ALL, "param");
 
 $xoopsOption['template_main'] = "pedigree_owner.html";
 
@@ -24,12 +26,13 @@ $config_handler =& xoops_gethandler('config');
 $moduleConfig   =& $config_handler->getConfigsByCat(0, $module->getVar('mid'));
 
 global $xoopsTpl, $xoopsDB, $xoopsModuleConfig;
+xoops_load('XoopsUserUtility');
 
 $ownid = $_GET['ownid'];
 
 
 //query
-$queryString = "SELECT * from ".$xoopsDB->prefix("eigenaar")." WHERE ID=".$ownid;
+$queryString = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_owner")." WHERE ID=".$ownid;
 $result = $xoopsDB->query($queryString);
 
 while ($row = $xoopsDB->fetchArray($result)) 
@@ -64,7 +67,7 @@ while ($row = $xoopsDB->fetchArray($result))
 	$breeder = breederof($row['ID'],1);
 	
 	//entered into the database by
-	$dbuser = xoops_getLinkedUnameFromId($row['user']);
+	$dbuser = XoopsUserUtility::getUnameFromId($row['user']);
 	
 	//check for edit rights
 	$access = 0;

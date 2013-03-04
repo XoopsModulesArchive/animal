@@ -30,7 +30,7 @@ $dogname = $_POST['curname'];
 
 if (!empty($dogname)) 
 {
-	$queryString = "SELECT * from ".$xoopsDB->prefix("stamboom")." WHERE ID=".$dogid;
+	$queryString = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID=".$dogid;
 	$result = $xoopsDB->query($queryString);
 	while ($row = $xoopsDB->fetchArray($result)) 
 	{
@@ -50,17 +50,17 @@ if (!empty($dogname))
 		}
 		if ($access == "1")
 		{ 
-			$sql = "INSERT INTO ".$xoopsDB->prefix("stamboom_trash")." SELECT * FROM ".$xoopsDB->prefix("stamboom")." WHERE ".$xoopsDB->prefix("stamboom").".ID='".$dogid."'";
+			$sql = "INSERT INTO ".$xoopsDB->prefix("mod_pedigree_trash")." SELECT * FROM ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ".$xoopsDB->prefix("mod_pedigree_tree").".ID='".$dogid."'";
 			mysql_query($sql);
-			$delsql = "DELETE FROM ".$xoopsDB->prefix("stamboom")." WHERE ID ='".$row['ID']."'";
+			$delsql = "DELETE FROM ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID ='".$row['ID']."'";
 			mysql_query($delsql);
 			if($row['roft'] == "0")
 			{
-				$sql = "UPDATE ".$xoopsDB->prefix("stamboom")." SET vader = '0' where vader = '".$row['ID']."'";
+				$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_tree")." SET vader = '0' where vader = '".$row['ID']."'";
 			}
 			else
 			{
-				$sql = "UPDATE ".$xoopsDB->prefix("stamboom")." SET moeder = '0' where moeder = '".$row['ID']."'";
+				$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_tree")." SET moeder = '0' where moeder = '".$row['ID']."'";
 			}
 			mysql_query($sql);
 			$ch = 1;

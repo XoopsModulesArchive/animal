@@ -2,23 +2,23 @@
 //menublock
 define("_PED_VIEWSEARCH","View/Search ");
 define("_PED_ADD_A","Add a ");
-define("_PED_ADD_LITTER","Add a ");
+//define("_PED_ADD_LITTER","Add a ");
 define("_PED_VIEW_OWNBREED","View Owner/Breeder ");
 define("_PED_ADD_OWNBREED","Add Owner/Breeder ");
-define("_PED_ADVANCE_INFO","Advanced infos ");
+define("_PED_ADVANCE_INFO","Advanced Info ");
 define("_PED_LATEST_ADD","Latest additions ");
 define("_PED_WEB_TOOLS","Webmaster tools ");
 define("_PED_USER_LOGIN","Login ");
 define("_PED_USER_LOGOUT","Logout ");
 //add_litter
 define("_PED_KITT_NAME","Input form for [animalType] number ");
-define("_PED_ADD_DATA","Additional Data");
+//define("_PED_ADD_DATA","Additional Data");
 define("_PED_DATA_INFO","The data entered below is used for the entire ");
 //delete
 define("_PED_DEL_CONFIRM","Are you sure you want to delete this");
 //tools
 define("_PED_GENSTTINGS","General setting");
-define("_PED_LANG_OPTIONS","Langage options");
+define("_PED_LANG_OPTIONS","Language options");
 define("_PED_CREATE_USER_FIELD","Create user field");
 define("_PED_LIST_USER_FIELD","List user field");
 define("_PED_DEFINE_COLOR","Define colors");
@@ -68,7 +68,7 @@ define("_PED_FIELD_FORM2","<table><tr><td width=25%>Field name:</td><td width=50
 define("_PED_FIELD_FORM3","<table><tr><td width=25%>Field explanation:</td><td width=50%>");
 define("_PED_FIELD_NAM","Please enter the fieldname");
 define("_PED_FIELD_EXPLAN1","Please enter the explanation for this field");
-define("_PED_FIELD_TYP_SEL","Select the fieldtype");
+define("_PED_FIELD_TYP_SEL","Select the field type");
 define("_PED_FIELD_PARAM","Choose the settings for this field");
 define("_PED_FIELD_ADD_VALUE","Add possible value(s) for your field");
 define("_PED_SEARCH_PARAMFIELD","Search settings for this field");
@@ -114,6 +114,7 @@ define("_PED_LOOKUPFIELD","Shown below are the user values for this lookupfield.
 define("_PED_DELVALUE","When deleting a value from this lookup field all animals with that value will be given the default value for this field.");
 define("_PED_FIELPROP","The field properties have now been changed. Clicking the button below will clear the wizard and let you change another field.");
 define("-PED_FIELDPROP_ELSE","The field has now been created. Clicking the button below will clear the wizard and let you add another field.");
+define("_PED_FIELDPROP_ELSE","The field was created. By clicking the button below the wizard allows you to add another field.");
 define("_PED_FIELDNAME","'Field name' is the name that will be used throughout the pedigree database to reference this field.<hr><br />'Field explanation' is the explanation which will be given on the edit page for this field.<hr>");
 define("_PED_EXPLAIN_NUMB","This field is used to set the number of results a page will return from a search. If more results are returned extra pages will be created for easy browsing.Set this number higher as your database grows and the number of pages increase.");
 define("_PED_WELC_SCREEN","Should the welcome page be shown ? This setting (if set to no) will also remove the Welcome button from the menu.");
@@ -140,7 +141,7 @@ define("_PED_WELC_TXT_EXPLAIN2","<br/>[numanimals] = number of animals in the da
 define("_PED_FIELD_EXPLAIN4","Shown below are the user defined fields for this pedigree database.<br />Click on the name to edit the field.<br />Click on the 'X' to delete the field from the database.");
 define("_PED_FIELD_EXPLAIN5","The following user fields have been deleted and can be restored.<br />Click on the name of the field to restore it.");
 define("_PED_NO_DELETE","This value cannot be deleted because it is the default value for 'userfield'");
-define("_PED_DEFAUTVALUE_EXPLAIN","<hr><i>If there are allready animals in your database they will all be assigned this default value for this field.</i>");
+define("_PED_DEFAUTVALUE_EXPLAIN","<hr><i>If there are already animals in your database they will all be assigned this default value for this field.</i>");
 define("_PED_SEARCHNAME_EXPLAIN","<hr><i>Search name is the name that will be shown for this field on the search page.<br />Search explanation is the explanation which will be given on the search page for this field.</i>");
 
 
@@ -180,7 +181,7 @@ define("_PED_SIP", "Search the internet for pictures of : ");
 //headers
 define("_PED_HD_NAME", "Name");
 define("_PED_HD_COLO", "Colour");
-define("_PED_HD_PEDI", "Pedigreenumber");
+define("_PED_HD_PEDI", "Pedigree number");
 define("_PED_HD_DATE", "Date of Birth");
 
 define("_PED_OWN_NAME", "Name");
@@ -336,7 +337,7 @@ define("_PED_COI_TNXTIT", "A word of thanks");
 define("_PED_COI_TNXCON", "We would like to thank Jacques Le Renard for the algorithms behind this webpage. Jacques has spent many hours perfecting these calculations. Please visit his website <a href=\"http://www.somali.asso.fr/eros/\">E.R.o's Information System</a>");
 
 //members top 50
-define("_PED_M50_TIT", "Top 50 members orderd by number of dogs entered into the database");
+define("_PED_M50_TIT", "Top 50 members ordered by number of dogs entered into the database");
 define("_PED_M50_POS", "Position");
 define("_PED_M50_NUMD", "Dogs entered");
 
@@ -369,25 +370,25 @@ define("_PED_ADD_KNOWNOK", "I mean a different [animalType] and would like to co
 
 //add a onwer/breeder
 define("_PED_ADD_OWNER", "Add an owner or breeder");
-define("_PED_FLD_OWN_LNAME", "Lastname");
-define("_PED_FLD_OWN_FNAME", "Firstname");
-define("_PED_FLD_OWN_STR", "Streetname");
-define("_PED_FLD_OWN_HN", "Housenumber");
+define("_PED_FLD_OWN_LNAME", "Last name");
+define("_PED_FLD_OWN_FNAME", "First name");
+define("_PED_FLD_OWN_STR", "Street name");
+define("_PED_FLD_OWN_HN", "House number");
 define("_PED_FLD_OWN_PC", "Postcode");
 define("_PED_FLD_OWN_CITY", "City");
-define("_PED_FLD_OWN_PN", "Telephonenumber");
-define("_PED_FLD_OWN_EMAIL", "Emailadres");
+define("_PED_FLD_OWN_PN", "Telephone number");
+define("_PED_FLD_OWN_EMAIL", "Email address");
 define("_PED_FLD_OWN_WEB", "Website");
 define("_PED_FLD_OWN_WEB_EX", "Please fill in the website adres. (URL)<br/><i>http://www.yourdomain.com/page.html</i>");
 
 //view owner/breeder
 define("_PED_OWN_OWN", "Owner of");
 define("_PED_OWN_BRE", "Breeder of");
-define("_PED_OWN_FNAME", "Firstname");
-define("_PED_OWN_LNAME", "Lastname");
+define("_PED_OWN_FNAME", "First name");
+define("_PED_OWN_LNAME", "Last name");
 
 //add a litter
-define("_PED_LITTER", "[liter]");
+//define("_PED_LITTER", "[liter]");
 define("_PED_ADD_LITTER", "Add a [litter]");
 define("_PED_ADD_LIT_OK", "The [animalTypes] have been added !");
 
@@ -402,7 +403,7 @@ define("_PED_DELE_WARN", "Warning");
 define("_PED_DELE_WARN_LABL", "Any pups will also be orphaned by this action.");
 define("_PED_DELE_WARN_BREEDER", "The following [animalTypes] will no longer have a breeder in the database.");
 define("_PED_DELE_WARN_OWNER", "The following [animalTypes] will no longer have an owner in the database.");
-define("_PED_DEL_MSG","Etes vous sur de vouloir supprimer ce ");
+define("_PED_DEL_MSG","Are you sure to delete this ");
 define("_PED_ALL","Any ");
 define("_PED_ALL_ORPH"," will also be orphaned by this action");
 
@@ -431,4 +432,3 @@ define("_PED_MPED_M4", "Male [animalType] present four times in 4 generation ped
 
 //pedigreebook results
 define("_PED_BOOK_INTRO", "The data on this page is only for the following pedigreebook :  [flag]  [country]");
-?>

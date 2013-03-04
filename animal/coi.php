@@ -47,7 +47,7 @@ if (! isset ($max_dist))                     // maximum length of implex loops
 }
 
 $empty = array () ; // an empty array
-$sql1 = "select ID, vader, moeder, roft from ".$xoopsDB->prefix("stamboom")." where ID " ;
+$sql1 = "select ID, vader, moeder, roft from ".$xoopsDB->prefix("mod_pedigree_tree")." where ID " ;
 
 // input data arrays:
 $IDs = $empty ;
@@ -349,7 +349,7 @@ function set_name ($ID)
     $name = ' ' ;
     if ($ID)
        { 
-	    $sqlquery = "SELECT ID, NAAM, roft from ".$xoopsDB->prefix("stamboom")." where ID = '$ID'";
+	    $sqlquery = "SELECT ID, NAAM, roft from ".$xoopsDB->prefix("mod_pedigree_tree")." where ID = '$ID'";
 		$queryresult = mysql_query($sqlquery);
 		$ani = mysql_fetch_array($queryresult);  
          $name = $ani[1] ;
@@ -380,7 +380,7 @@ function one_animal ($ID)  {
     // echo '<div style="position:relative;float:right;width=2.0em;color=white;">' . $sosa . '</div>' ;
     $animal = set_name($ID) ;
     list ($ID, $name, $sex, $hd, $ems) = $animal ;
-    $sqlquery = "select SQL_CACHE count(ID) from ".$xoopsDB->prefix("stamboom")." where vader = '$ID' or moeder = '$ID'";
+    $sqlquery = "select SQL_CACHE count(ID) from ".$xoopsDB->prefix("mod_pedigree_tree")." where vader = '$ID' or moeder = '$ID'";
 	$queryresult = mysql_query($sqlquery);
 	$nb = mysql_fetch_array($queryresult);
     $nb_children = $nb[0] ;
@@ -432,7 +432,7 @@ if (! isset($a))
 
 if (isset($a)) 
 {
-	$sqlquery = "select ID, vader, moeder, roft from ".$xoopsDB->prefix("stamboom")." where ID  = '$a'";
+	$sqlquery = "select ID, vader, moeder, roft from ".$xoopsDB->prefix("mod_pedigree_tree")." where ID  = '$a'";
 	$queryresult = mysql_query($sqlquery);
 	$rowhond = mysql_fetch_array($queryresult);
 	$a = $rowhond['ID'];
@@ -472,7 +472,7 @@ $val = '' ;
 if (! $s && $d) { $codec1 = $d ; $codec2 = 0 ; }
 if ($codec1 == $codec2) { $codec2 = 0 ; }
 
-$sqlquery = "select ID, vader, moeder, roft from ".$xoopsDB->prefix("stamboom")." where ID  = '$codec1'";
+$sqlquery = "select ID, vader, moeder, roft from ".$xoopsDB->prefix("mod_pedigree_tree")." where ID  = '$codec1'";
 $queryresult = mysql_query($sqlquery);
 $rowhond = mysql_fetch_array($queryresult);
 $a1 = $rowhond['ID'];
@@ -482,7 +482,7 @@ $sex1 = $rowhond['roft'];
 
 // echo "sqlquery:".$sqlquery."<br />";
 
-$sqlquery = "select ID, vader, moeder, roft from ".$xoopsDB->prefix("stamboom")." where ID  = '$codec2'";
+$sqlquery = "select ID, vader, moeder, roft from ".$xoopsDB->prefix("mod_pedigree_tree")." where ID  = '$codec2'";
 $queryresult = mysql_query($sqlquery);
 $rowhond = mysql_fetch_array($queryresult);
 $a2 = $rowhond['ID'];
@@ -512,7 +512,7 @@ $xoopsTpl->assign("SADexplain", strtr(_PED_COI_SDEX, array( '[animalType]' => $m
 $de_cujus = 0 ;
 $sire_ID = $_GET['s']; 
 $dam_ID = $_GET['d'];
-$rec = "select ID from ".$xoopsDB->prefix("stamboom")." WHERE vader = '".$sire_ID."' and moeder = '".$dam_ID."' order by NAAM";
+$rec = "select ID from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE vader = '".$sire_ID."' and moeder = '".$dam_ID."' order by NAAM";
 $result = $xoopsDB->query($rec);
 $content = "";
 while ($row = $xoopsDB->fetchArray($result)) 
@@ -580,7 +580,7 @@ $xoopsTpl->assign("COIval", $f1);
 $xoopsTpl->assign("COIexplain", strtr(_PED_COI_COIEX, array( '[animalType]' => $moduleConfig['animalType'], '[animalTypes]' => $moduleConfig['animalTypes'], '[children]' => $moduleConfig['children'] )));
 $xoopsTpl->assign("COIcoi", _PED_COI_COI);
 $dogid = $_GET['dogid'];
-$query =  "UPDATE ".$xoopsDB->prefix("stamboom")." SET coi=".$f1." WHERE ID = ".$dogid;
+$query =  "UPDATE ".$xoopsDB->prefix("mod_pedigree_tree")." SET coi=".$f1." WHERE ID = ".$dogid;
 $xoopsDB->queryf($query);
 arsort ($deltaf) ; $j=1 ; 
 foreach ($deltaf as $i=>$v) 

@@ -6674,11 +6674,11 @@ for ($index = 0; $index < count($fok); $index++)
 	$lnaam = $fok[$index]['anaam'];
 	$vnaam = $fok[$index]['vnaam'];
 
-		$sql = "SELECT ID from ".$xoopsDB->prefix("eigenaar")." where firstname = '".$vnaam."' AND lastname = '".$lnaam."'";
+		$sql = "SELECT ID from ".$xoopsDB->prefix("mod_pedigree_owner")." where firstname = '".$vnaam."' AND lastname = '".$lnaam."'";
 		$result = $xoopsDB->query($sql);
 		while ($row = $xoopsDB->fetchArray($result)) 
 		{
-			$UPD = "UPDATE ".$xoopsDB->prefix("stamboom")." set id_fokker = '".$row['ID']."' where NAAM='".$id."'";
+			$UPD = "UPDATE ".$xoopsDB->prefix("mod_pedigree_tree")." set id_fokker = '".$row['ID']."' where NAAM='".$id."'";
 			//echo $UPD."<br />";
 			mysql_query($UPD);
 		}

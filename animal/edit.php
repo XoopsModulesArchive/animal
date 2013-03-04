@@ -60,11 +60,11 @@ function save()
 			{
 				$newvalue = uploadedpict( 0 );
 			}
-			$sql = "UPDATE ".$xoopsDB->prefix("stamboom")." SET user".$fields[$i]."='".$newvalue."' WHERE ID='".$a."'";
+			$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_tree")." SET user".$fields[$i]."='".$newvalue."' WHERE ID='".$a."'";
 			mysql_query($sql);
 			}			
 	}
-	$sql = "UPDATE ".$xoopsDB->prefix("stamboom")." SET NAAM = '".$_POST['NAAM']."', roft = '".$_POST['roft']."' WHERE ID='".$a."'";
+	$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_tree")." SET NAAM = '".$_POST['NAAM']."', roft = '".$_POST['roft']."' WHERE ID='".$a."'";
 	mysql_query($sql);
 	$picturefield = $_FILES['photo']['name'];
 	if( empty( $picturefield ) || $picturefield == "" )
@@ -74,12 +74,12 @@ function save()
 	else
 	{
 		$foto = uploadedpict( 0 );
-		$sql = "UPDATE ".$xoopsDB->prefix("stamboom")." SET foto='".$foto."' WHERE ID='".$a."'";
+		$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_tree")." SET foto='".$foto."' WHERE ID='".$a."'";
 	}
 	mysql_query($sql);
 	if ($moduleConfig['ownerbreeder'] == '1')
 	{
-		$sql = "UPDATE ".$xoopsDB->prefix("stamboom")." SET id_eigenaar = '".$_POST['id_eigenaar']."', id_fokker = '".$_POST['id_fokker']."' WHERE ID='".$a."'";
+		$sql = "UPDATE ".$xoopsDB->prefix("mod_pedigree_tree")." SET id_eigenaar = '".$_POST['id_eigenaar']."', id_fokker = '".$_POST['id_fokker']."' WHERE ID='".$a."'";
 		mysql_query($sql);
 	}	
 	redirect_header("dog.php?id=".$a, 2, "Your changes have been saved");	
@@ -91,7 +91,7 @@ function edit( $id = 0)
 	if (isset($_GET['id'])) { $id = $_GET['id']; }
 	include XOOPS_ROOT_PATH."/class/xoopsformloader.php";
 	
-	$sql = "SELECT * FROM ".$xoopsDB->prefix("stamboom")." WHERE ID=".$id;
+	$sql = "SELECT * FROM ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID=".$id;
 	$result = $xoopsDB->query($sql);
 	while ($row = $xoopsDB->fetchArray($result)) 
 	{
@@ -107,7 +107,7 @@ function edit( $id = 0)
 		$gender_radio -> addOptionArray( array( '0'=>strtr(_PED_FLD_MALE, array( '[male]' => $moduleConfig['male'] )), '1'=>strtr(_PED_FLD_FEMA, array( '[female]' => $moduleConfig['female'] ))));
 		$form->addElement( $gender_radio );
 		//father
-		$sql = "SELECT * from ".$xoopsDB->prefix("stamboom")." WHERE ID='".$row['vader']."'";
+		$sql = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID='".$row['vader']."'";
 		$resfather = $xoopsDB->query($sql);
 		$numfields = mysql_num_rows($resfather);
 		if (!$numfields == "0")
@@ -122,7 +122,7 @@ function edit( $id = 0)
 			$form->addElement(new XoopsFormLabel("<b>".strtr(_PED_FLD_FATH, array( '[father]' => $moduleConfig['father'] ))."</b>","<img src=\"images/male.gif\"><a href=\"seldog.php?curval=".$row['ID']."&gend=1&letter=a\">Unknown</a>"));
 		}
 		//mother
-		$sql = "SELECT * from ".$xoopsDB->prefix("stamboom")." WHERE ID='".$row['moeder']."'";
+		$sql = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID='".$row['moeder']."'";
 		$resmother = $xoopsDB->query($sql);
 		$numfields = mysql_num_rows($resmother);
 		if (!$numfields == "0")
@@ -140,7 +140,7 @@ function edit( $id = 0)
 		if ($moduleConfig['ownerbreeder'] == '1')
 		{
 			$owner_select = new XoopsFormSelect("<b>"._PED_FLD_OWNE."</b>", $name="id_eigenaar", $value=$row['id_eigenaar'], $size=1, $multiple=false);
-			$queryeig = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("eigenaar")." ORDER BY \"lastname\"";
+			$queryeig = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("mod_pedigree_owner")." ORDER BY \"lastname\"";
 			$reseig = $xoopsDB->query($queryeig);
 			$owner_select -> addOption( 0, $name=_PED_UNKNOWN, $disabled=false );
 			while ($roweig = $xoopsDB->fetchArray($reseig))
@@ -150,7 +150,7 @@ function edit( $id = 0)
 			$form->addElement ( $owner_select);
 			//breeder
 			$breeder_select = new XoopsFormSelect("<b>"._PED_FLD_BREE."</b>", $name="id_fokker", $value=$row['id_fokker'], $size=1, $multiple=false);
-			$queryfok = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("eigenaar")." ORDER BY \"lastname\"";
+			$queryfok = "SELECT ID, lastname, firstname from ".$xoopsDB->prefix("mod_pedigree_owner")." ORDER BY \"lastname\"";
 			$resfok = $xoopsDB->query($queryfok);
 			$breeder_select -> addOption( 0, $name=_PED_UNKNOWN, $disabled=false );
 			while ($rowfok = $xoopsDB->fetchArray($resfok))

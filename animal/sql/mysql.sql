@@ -16,7 +16,7 @@
 -- Tabel structuur voor tabel `xovdk_eigenaar`
 -- 
 
-CREATE TABLE `eigenaar` (
+CREATE TABLE `mod_pedigree_owner` (
   `ID` int(11) NOT NULL auto_increment,
   `firstname` varchar(30) NOT NULL default '',
   `lastname` varchar(30) NOT NULL default '',
@@ -38,7 +38,7 @@ CREATE TABLE `eigenaar` (
 -- Tabel structuur voor tabel `xovdk_stamboom`
 -- 
 
-CREATE TABLE `stamboom` (
+CREATE TABLE `mod_pedigree_tree` (
   `ID` mediumint(7) unsigned NOT NULL auto_increment,
   `NAAM` text NOT NULL,
   `id_eigenaar` smallint(5) NOT NULL default '0',
@@ -60,7 +60,7 @@ CREATE TABLE `stamboom` (
 -- Tabel structuur voor tabel `xovdk_stamboom_config`
 -- 
 
-CREATE TABLE `stamboom_config` (
+CREATE TABLE `mod_pedigree_fields` (
   `ID` tinyint(2) NOT NULL auto_increment,
   `isActive` tinyint(1) NOT NULL default '0',
   `FieldName` varchar(50) NOT NULL default '',
@@ -88,7 +88,7 @@ CREATE TABLE `stamboom_config` (
 -- Tabel structuur voor tabel `xovdk_stamboom_temp`
 -- 
 
-CREATE TABLE `stamboom_temp` (
+CREATE TABLE `mod_pedigree_temp` (
   `ID` int(11) NOT NULL default '0',
   `NAAM` text NOT NULL,
   `id_eigenaar` int(11) NOT NULL default '0',
@@ -110,7 +110,7 @@ CREATE TABLE `stamboom_temp` (
 -- Tabel structuur voor tabel `xovdk_stamboom_trash`
 -- 
 
-CREATE TABLE `stamboom_trash` (
+CREATE TABLE `mod_pedigree_trash` (
   `ID` int(11) NOT NULL auto_increment,
   `NAAM` text NOT NULL,
   `id_eigenaar` int(11) NOT NULL default '0',

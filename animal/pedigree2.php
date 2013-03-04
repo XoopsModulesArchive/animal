@@ -10,7 +10,9 @@ else
 require_once(XOOPS_ROOT_PATH ."/modules/animal/include/functions.php");
 
 // Get all HTTP post or get parameters into global variables that are prefixed with "param_"
-import_request_variables("gp", "param_");
+//import_request_variables("gp", "param_");
+extract($_GET, EXTR_PREFIX_ALL, "param");
+extract($_POST, EXTR_PREFIX_ALL, "param");
 
 // This page uses smarty templates. Set "$xoopsOption['template_main']" before including header
 $xoopsOption['template_main'] = "pedigree_pedigree.html";
@@ -145,7 +147,7 @@ function pedigree_main($ID)
 	mmm.nhsb as mmm_nhsb, 
 	mmm.foto as mmm_foto, 
 	mmm.hd as mmm_hd 
-	FROM ".$xoopsDB->prefix("stamboom")." d 
+	FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d
 	LEFT JOIN xoops_stamboom f ON d.vader = f.id 
 	LEFT JOIN xoops_stamboom m ON d.moeder = m.id 
 	LEFT JOIN xoops_stamboom ff ON f.vader = ff.id 

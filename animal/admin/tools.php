@@ -161,13 +161,13 @@ function database_oa()
 	global $xoopsTpl, $xoopsDB;
 	$form = "For your pedigree database to work well it is important that the information contained within is correct.<br />It is possible create errors and achieve unexpected results by accidentily adding the wrong parents to an animal. If an animal is selected to be it's own parent or grandparent in infinite loop will be created when trying to view the pedigree. <br /><br />The database has been searched and any animals below the line require your attention.<hr>";
 	$sql = "SELECT d.id AS d_id, d.naam AS d_naam
-			FROM ".$xoopsDB->prefix("stamboom")." d
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." m ON m.id = d.moeder
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." f ON f.id = d.vader
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." mm ON mm.id = m.moeder
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." mf ON mf.id = m.vader
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." fm ON fm.id = f.moeder
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." ff ON ff.id = f.vader
+			FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." m ON m.id = d.moeder
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." f ON f.id = d.vader
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." mm ON mm.id = m.moeder
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." mf ON mf.id = m.vader
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." fm ON fm.id = f.moeder
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." ff ON ff.id = f.vader
 			WHERE 
 			d.moeder = d.id
 			OR d.vader = d.id
@@ -197,8 +197,8 @@ function database_fp()
 	global $xoopsTpl, $xoopsDB;
 	$form = "For your pedigree database to work well it is important that the information contained within is correct.<br />It is possible create errors and achieve unexpected results by changing the gender of an animal. If you discover that a male in the database is really female or the other way around it is possible to create errors if accidentilly children have been connected to the wrong gender.<br /><br />The database has been searched and any animals below the line require your attention.<hr>";
 	$sql = "SELECT d.id AS d_id, d.naam AS d_naam, m.roft as m_roft
-			FROM ".$xoopsDB->prefix("stamboom")." d
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." m ON m.id = d.moeder
+			FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." m ON m.id = d.moeder
 			WHERE 
 			d.moeder = m.id
 			AND m.roft = '0' ";
@@ -208,8 +208,8 @@ function database_fp()
 		$form .= "<li><a href=\"dog.php?id=".$row['d_id']."\">".$row['d_naam']."</a> [mother seems to be male]<br />";	
 	}
 	$sql = "SELECT d.id AS d_id, d.naam AS d_naam, f.roft as f_roft
-			FROM ".$xoopsDB->prefix("stamboom")." d
-			LEFT JOIN ".$xoopsDB->prefix("stamboom")." f ON f.id = d.vader
+			FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d
+			LEFT JOIN ".$xoopsDB->prefix("mod_pedigree_tree")." f ON f.id = d.vader
 			WHERE 
 			d.vader = f.id
 			AND f.roft = '1' ";
@@ -232,7 +232,7 @@ function deleted()
 {
 	global $xoopsTpl, $xoopsDB, $moduleConfig;
 	$form = "Below the line are the animals which have been deleted from your database.<br /><br />By clicking on the name you can reinsert them into the database.<br />By clicking on the 'X' in front of the name you can permanently delete the animal.<hr>";
-	$sql = "SELECT ID, NAAM	FROM ".$xoopsDB->prefix("stamboom_trash");
+	$sql = "SELECT ID, NAAM	FROM ".$xoopsDB->prefix("mod_pedigree_trash");
 	$result = $xoopsDB->query($sql);
 	while ($row = $xoopsDB->fetchArray($result)) 
 	{
@@ -248,7 +248,7 @@ function deleted()
 function delperm( $id )
 {
 	global $xoopsTpl, $xoopsDB;
-	$sql = "DELETE FROM ".$xoopsDB->prefix("stamboom_trash")." WHERE ID = ".$id;
+	$sql = "DELETE FROM ".$xoopsDB->prefix("mod_pedigree_trash")." WHERE ID = ".$id;
 	mysql_query($sql);
 	deleted();
 }
@@ -256,7 +256,7 @@ function delperm( $id )
 function delall()
 {
 	global $xoopsTpl, $xoopsDB;
-	$sql = "DELETE FROM ".$xoopsDB->prefix("stamboom_trash");
+	$sql = "DELETE FROM ".$xoopsDB->prefix("mod_pedigree_trash");
 	mysql_query($sql);
 	deleted();
 }
@@ -264,7 +264,7 @@ function delall()
 function restore( $id )
 {
 	global $xoopsTpl, $xoopsDB;
-	$sql = "SELECT * from ".$xoopsDB->prefix("stamboom_trash")." WHERE ID = ".$id;
+	$sql = "SELECT * from ".$xoopsDB->prefix("mod_pedigree_trash")." WHERE ID = ".$id;
 	$result = $xoopsDB->query($sql);
 	while ($row = $xoopsDB->fetchArray($result)) 
 	{
@@ -274,9 +274,9 @@ function restore( $id )
 			$queryvalues .= "'".$values."',";
 		}
 		$outgoing = substr_replace($queryvalues,"",-1);
-		$query = "INSERT INTO ".$xoopsDB->prefix("stamboom")." VALUES (".$outgoing.")";
+		$query = "INSERT INTO ".$xoopsDB->prefix("mod_pedigree_tree")." VALUES (".$outgoing.")";
 		mysql_query($query);
-		$delquery = "DELETE FROM ".$xoopsDB->prefix("stamboom_trash")." WHERE ID = ".$id;
+		$delquery = "DELETE FROM ".$xoopsDB->prefix("mod_pedigree_trash")." WHERE ID = ".$id;
 		mysql_query($delquery);
 		$form .= "<li><a href=\"pedigree.php?pedid=".$row['ID']."\">".$row['NAAM']."</a> has been restored into the database.<hr>";	
 	}

@@ -33,7 +33,7 @@ global $xoopsModuleConfig;
 
 $id= $_GET['id'];
 //query (find values for this dog (and format them))
-$queryString = "SELECT NAAM, user, roft from ".$xoopsDB->prefix("stamboom")." WHERE ID=".$id;
+$queryString = "SELECT NAAM, user, roft from ".$xoopsDB->prefix("mod_pedigree_tree")." WHERE ID=".$id;
 $result = $xoopsDB->query($queryString);
 
 while ($row = $xoopsDB->fetchArray($result)) 

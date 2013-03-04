@@ -9,7 +9,9 @@ else
 // Include any common code for this module.
 
 // Get all HTTP post or get parameters into global variables that are prefixed with "param_"
-import_request_variables("gp", "param_");
+//import_request_variables("gp", "param_");
+extract($_GET, EXTR_PREFIX_ALL, "param");
+extract($_POST, EXTR_PREFIX_ALL, "param");
 
 $xoopsOption['template_main'] = "pedigree_members.html";
 
@@ -17,7 +19,7 @@ include XOOPS_ROOT_PATH.'/header.php';
 
 global $xoopsTpl, $xoopsDB;
 
-$queryString = "SELECT count(d.user) as X, d.user as d_user, u.uname as u_uname FROM ".$xoopsDB->prefix("stamboom")." d LEFT JOIN ".$xoopsDB->prefix("users")." u ON d.user = u.uid GROUP  BY user	ORDER BY X desc limit 50";
+$queryString = "SELECT count(d.user) as X, d.user as d_user, u.uname as u_uname FROM ".$xoopsDB->prefix("mod_pedigree_tree")." d LEFT JOIN ".$xoopsDB->prefix("users")." u ON d.user = u.uid GROUP  BY user	ORDER BY X desc limit 50";
 $result = $xoopsDB->query($queryString);
 $numpos = 1;
 while ($row = $xoopsDB->fetchArray($result)) 
