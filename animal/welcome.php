@@ -14,7 +14,7 @@ include XOOPS_ROOT_PATH.'/header.php';
 
 global $xoopsTpl, $xoopsDB, $myts;
 
-$myts =& MyTextSanitizer::getInstance(); // MyTextSanitizer object
+$myts = MyTextSanitizer::getInstance(); // MyTextSanitizer object
 
 //query to count dogs
 $result=$xoopsDB->query("select count(*) from ".$xoopsDB->prefix("stamboom"));
