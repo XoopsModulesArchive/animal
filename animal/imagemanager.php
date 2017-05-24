@@ -91,9 +91,9 @@ if ($op == 'list') {
 				$criteria->setStart($start);
 				$storetype = $imgcat->getVar('imgcat_storetype');
 				if ($storetype == 'db') {
-					$images =& $image_handler->getObjects($criteria, false, true);
+					$images = $image_handler->getObjects($criteria, false, true);
 				} else {
-					$images =& $image_handler->getObjects($criteria, false, false);
+					$images = $image_handler->getObjects($criteria, false, false);
 				}
 				$imgcount = count($images);
 				$max = ($imgcount > 10) ? 10 : $imgcount;
